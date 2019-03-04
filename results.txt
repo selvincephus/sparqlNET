@@ -1,0 +1,19 @@
+itr = 2500
+input = What is the default value of humidity ?
+output = SELECT ?value WHERE ?subject rdfs subClassOf eva Attribute . ?subject rdfs label ?parameter .FILTER regex ?parameter comma parameter name comma i ?subject rdfs subClassOf ?restriction . ?restriction owl onProperty eva hasDefaultValue owl hasValue ?value . <EOS>
+input = What are the changes in release two ?
+output = SELECT DISTINCT ?result WHERE ?feature rdfs subClassOf eva Attribute . ?subject rdfs label ?parameter .FILTER regex ?parameter comma parameter name comma i ?subject rdfs subClassOf ?restriction . ?restriction owl onProperty eva hasDefaultValue owl hasValue ?value . <EOS>
+input = Is license required for feature one ?
+output = SELECT DISTINCT ?result WHERE ?feature rdfs subClassOf eva Attribute . ?subject rdfs label ?parameter .FILTER regex ?parameter comma parameter name comma i ?subject rdfs subClassOf ?restriction . ?restriction owl onProperty eva hasDefaultValue owl hasValue ?value . <EOS>
+input = what is the torque value of grounding cable ?
+output = SELECT DISTINCT ?value WHERE ?subject rdfs subClassOf eva Attribute . ?subject rdfs label ?parameter .FILTER regex ?parameter comma parameter name comma i ?subject rdfs subClassOf ?restriction . ?restriction owl onProperty eva hasDefaultValue owl hasValue ?value . <EOS>
+
+itr = 7500
+input = What is the default value of humidity ?
+output = SELECT ?value WHERE ?subject rdfs subClassOf eva Attribute . ?subject rdfs label ?parameter .FILTER regex ?parameter comma parameter name comma i ?subject rdfs subClassOf ?restriction . ?restriction owl onProperty eva hasDefaultValue owl hasValue ?value . <EOS>
+input = What are the changes in release two ?
+output = SELECT DISTINCT ?result WHERE ?feature rdfs subClassOf eva Feature . ?feature rdfs subClassOf ?restriction . ?restriction owl onProperty eva hasReleaseEvent owl someValuesFrom ?event . ?event rdfs label ?eventlabel . ?feature rdfs label ?featurelabel . ?event rdfs subClassOf ?restriction . ?restriction owl onProperty eva forRelease owl someValuesFrom ?release . ?release rdfs label ?releaselabel .FILTER regex ?featurelabel comma feature name comma i BIND exists ?release rdfs label ?releaselabel as ?y FILTER regex ?releaselabel comma release comma i BIND IF ?y comma true comma false AS ?result <EOS>
+input = Is license required for feature one ?
+output = SELECT DISTINCT ?result WHERE ?feature rdfs subClassOf eva Feature . ?feature rdfs subClassOf ?restriction . ?restriction owl onProperty eva hasLicenseType owl allValuesFrom ?license . ?license rdfs label ?result . ?feature rdfs label ?featurename . FILTER regex ?featurename oomma feature name comma i <EOS>
+input = what is the torque value of grounding cable ?
+output = SELECT DISTINCT ?value WHERE ?subject rdfs subClassOf ?restriction . ?restriction owl onProperty eva hasTorqueValue owl hasValue ?value . ?subject rdfs label ?name . FILTER regex ?name comma parameter name comma i <EOS>

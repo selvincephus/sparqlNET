@@ -184,7 +184,7 @@ class Lang:
 # Turn a Unicode string to plain ASCII, thanks to
 # http://stackoverflow.com/a/518232/2809427
 def unicodeToAscii(s):
-    print(s)
+    # print(s)
     return s # ''.join(
        # c for c in unicodedata.normalize('NFD', s)
        # if unicodedata.category(c) != 'Mn'
@@ -272,8 +272,8 @@ def prepareData(lang1, lang2, reverse=False):
     print("Trimmed to %s sentence pairs" % len(pairs))
     print("Counting words...")
     for pair in pairs:
-        print(len(pair))
-        print(pair)
+        # print(len(pair))
+        # print(pair)
         if len(pair) == 2:
             input_lang.addSentence(pair[0])
             output_lang.addSentence(pair[1])
@@ -841,11 +841,14 @@ def evaluateAndShowAttention(input_sentence):
         encoder1, attn_decoder1, input_sentence)
     print('input =', input_sentence)
     print('output =', ' '.join(output_words))
-    showAttention(input_sentence, output_words, attentions)
+    # showAttention(input_sentence, output_words, attentions)
 
 # evaluateAndShowAttention("Who created the comic old man Logan ?")
 
 evaluateAndShowAttention("What is the default value of humidity ?")
+evaluateAndShowAttention("What are the changes in release two ?")
+evaluateAndShowAttention("Is license required for feature one ?")
+evaluateAndShowAttention("what is the torque value of grounding cable ?")
 #
 # evaluateAndShowAttention("Does Por tu amor have more episodes than Game of Thrones?")
 #
