@@ -154,7 +154,7 @@ EOS_token = 1
 class Lang:
     def __init__(self, name):
         self.name = name
-        self.word2index = {"humidity": 2}
+        self.word2index = {"humidity": 2,"solve":3,"alarm":4}
         self.word2count = {}
         self.index2word = {0: "SOS", 1: "EOS"}
 
@@ -849,6 +849,7 @@ evaluateAndShowAttention("What is the default value of humidity ?")
 evaluateAndShowAttention("What are the changes in release two ?")
 evaluateAndShowAttention("Is license required for feature one ?")
 evaluateAndShowAttention("what is the torque value of grounding cable ?")
+evaluateAndShowAttention("How to solve the alarm ?")
 #
 # evaluateAndShowAttention("Does Por tu amor have more episodes than Game of Thrones?")
 #
