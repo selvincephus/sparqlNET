@@ -96,6 +96,7 @@ from torch import optim
 import torch.nn.functional as F
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+device = "cpu"
 print(device)
 ######################################################################
 # Loading data files
@@ -154,11 +155,11 @@ EOS_token = 1
 class Lang:
     def __init__(self, name):
         self.name = name
-        self.word2index = {"humidity": 2,"solve":3,"alarm":4}
+        self.word2index = {"humidity":2,"solve":3,"alarm":4,"features":5,"LAA":6,"CDA":7}
         self.word2count = {}
         self.index2word = {0: "SOS", 1: "EOS"}
 
-        self.n_words = 3  # Count SOS and EOS
+        self.n_words = len(self.word2index)  # Count SOS and EOS
 
 
     def addSentence(self, sentence):
@@ -185,10 +186,7 @@ class Lang:
 # http://stackoverflow.com/a/518232/2809427
 def unicodeToAscii(s):
     # print(s)
-    return s # ''.join(
-       # c for c in unicodedata.normalize('NFD', s)
-       # if unicodedata.category(c) != 'Mn'
-  #  )
+    return ''.join(c for c in unicodedata.normalize('NFD', s) if unicodedata.category(c) != 'Mn')
 
 # Lowercase, trim, and remove non-letter characters
 
@@ -211,7 +209,7 @@ def readLangs(lang1, lang2, reverse=False):
     print("Reading lines...")
 
     # Read the file and split into lines
-    lines = open('data/%s-%s.txt' % (lang1, lang2)).\
+    lines = open('data/%s-%s.txt' % (lang1, lang2), encoding="utf8").\
         read().strip().split('\n')
 
     # Split every line into pairs and normalize
@@ -239,7 +237,7 @@ def readLangs(lang1, lang2, reverse=False):
 # earlier).
 #
 
-MAX_LENGTH = 200
+MAX_LENGTH = 50
 
 eng_prefixes = (
     "select", "select ",
@@ -283,7 +281,7 @@ def prepareData(lang1, lang2, reverse=False):
     return input_lang, output_lang, pairs
 
 
-input_lang, output_lang, pairs = prepareData('eng', 'fra', False)
+input_lang, output_lang, pairs = prepareData('eng', 'spar', False)
 print(random.choice(pairs))
 
 
@@ -636,7 +634,7 @@ def timeSince(since, percent):
 # of examples, time so far, estimated time) and average loss.
 #
 
-def trainIters(encoder, decoder, n_iters, print_every=1000, plot_every=100, learning_rate=0.01):
+def trainIters(encoder, decoder, n_iters, print_every=100, plot_every=100, learning_rate=0.02):
     start = time.time()
     plot_losses = []
     print_loss_total = 0  # Reset every print_every
@@ -664,10 +662,10 @@ def trainIters(encoder, decoder, n_iters, print_every=1000, plot_every=100, lear
             print('%s (%d %d%%) %.4f' % (timeSince(start, iter / n_iters),
                                          iter, iter / n_iters * 100, print_loss_avg))
 
-        if iter % plot_every == 0:
-            plot_loss_avg = plot_loss_total / plot_every
-            plot_losses.append(plot_loss_avg)
-            plot_loss_total = 0
+        # if iter % plot_every == 0:
+        #     plot_loss_avg = plot_loss_total / plot_every
+        #     plot_losses.append(plot_loss_avg)
+        #     plot_loss_total = 0
 
     # showPlot(plot_losses)
 
@@ -747,7 +745,7 @@ def evaluate(encoder, decoder, sentence, max_length=MAX_LENGTH):
 # input, target, and output to make some subjective quality judgements:
 #
 
-def evaluateRandomly(encoder, decoder, n=10):
+def evaluateRandomly(encoder, decoder, n=5):
     for i in range(n):
         pair = random.choice(pairs)
         print('>', pair[0])
@@ -777,15 +775,14 @@ def evaluateRandomly(encoder, decoder, n=10):
 #    encoder and decoder are initialized and run ``trainIters`` again.
 #
 
-hidden_size = 256
+hidden_size = 400
 encoder1 = EncoderRNN(input_lang.n_words, hidden_size).to(device)
 attn_decoder1 = AttnDecoderRNN(hidden_size, output_lang.n_words, dropout_p=0.1).to(device)
-# torch.save(encoder1, 'encoder1')
-# torch.save(attn_decoder1, 'attn_decoder1')
+trainIters(encoder1, attn_decoder1, 7500, print_every=100)
+torch.save(encoder1, 'encoder1')
+torch.save(attn_decoder1, 'attn_decoder1')
 # encoder1 = torch.load('encoder1')
 # attn_decoder1 = torch.load('attn_decoder1')
-# trainIters(encoder1, attn_decoder1, 7500, print_every=100)
-trainIters(encoder1, attn_decoder1, 7500, print_every=100)
 
 ######################################################################
 #
@@ -843,13 +840,13 @@ def evaluateAndShowAttention(input_sentence):
     print('output =', ' '.join(output_words))
     # showAttention(input_sentence, output_words, attentions)
 
-# evaluateAndShowAttention("Who created the comic old man Logan ?")
+evaluateAndShowAttention("What is the common features of LAA and CDA ?")
 
-evaluateAndShowAttention("What is the default value of humidity ?")
-evaluateAndShowAttention("What are the changes in release two ?")
-evaluateAndShowAttention("Is license required for feature one ?")
-evaluateAndShowAttention("what is the torque value of grounding cable ?")
-evaluateAndShowAttention("How to solve the alarm ?")
+# evaluateAndShowAttention("What is the default value of humidity ?")
+# evaluateAndShowAttention("What are the changes in release two ?")
+# evaluateAndShowAttention("Is license required for feature one ?")
+# evaluateAndShowAttention("what is the torque value of grounding cable ?")
+# evaluateAndShowAttention("How to solve the alarm ?")
 #
 # evaluateAndShowAttention("Does Por tu amor have more episodes than Game of Thrones?")
 #
