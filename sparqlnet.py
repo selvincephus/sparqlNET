@@ -775,7 +775,7 @@ def evaluateRandomly(encoder, decoder, n=5):
 #    encoder and decoder are initialized and run ``trainIters`` again.
 #
 
-hidden_size = 400
+hidden_size = 800
 encoder1 = EncoderRNN(input_lang.n_words, hidden_size).to(device)
 attn_decoder1 = AttnDecoderRNN(hidden_size, output_lang.n_words, dropout_p=0.1).to(device)
 trainIters(encoder1, attn_decoder1, 75000, print_every=100)
