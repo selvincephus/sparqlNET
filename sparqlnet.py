@@ -634,7 +634,7 @@ def timeSince(since, percent):
 # of examples, time so far, estimated time) and average loss.
 #
 
-def trainIters(encoder, decoder, n_iters, print_every=100, plot_every=100, learning_rate=0.001):
+def trainIters(encoder, decoder, n_iters, print_every=100, plot_every=100, learning_rate=0.01):
     start = time.time()
     plot_losses = []
     print_loss_total = 0  # Reset every print_every
@@ -775,10 +775,10 @@ def evaluateRandomly(encoder, decoder, n=5):
 #    encoder and decoder are initialized and run ``trainIters`` again.
 #
 
-hidden_size = 800
+hidden_size = 2500
 encoder1 = EncoderRNN(input_lang.n_words, hidden_size).to(device)
 attn_decoder1 = AttnDecoderRNN(hidden_size, output_lang.n_words, dropout_p=0.1).to(device)
-trainIters(encoder1, attn_decoder1, 45000, print_every=1000)
+trainIters(encoder1, attn_decoder1, 45000, print_every=100)
 torch.save(encoder1, 'encoder1')
 torch.save(attn_decoder1, 'attn_decoder1')
 # encoder1 = torch.load('encoder1')
