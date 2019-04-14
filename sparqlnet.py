@@ -95,8 +95,8 @@ import torch.nn as nn
 from torch import optim
 import torch.nn.functional as F
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-device = "cpu"
+# device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+device = "cuda"
 print(device)
 ######################################################################
 # Loading data files
@@ -281,7 +281,7 @@ def prepareData(lang1, lang2, reverse=False):
     return input_lang, output_lang, pairs
 
 
-input_lang, output_lang, pairs = prepareData('eng', 'spar', False)
+input_lang, output_lang, pairs = prepareData('eng', 'sparql', False)
 print(random.choice(pairs))
 
 
@@ -634,7 +634,7 @@ def timeSince(since, percent):
 # of examples, time so far, estimated time) and average loss.
 #
 
-def trainIters(encoder, decoder, n_iters, print_every=100, plot_every=100, learning_rate=0.02):
+def trainIters(encoder, decoder, n_iters, print_every=100, plot_every=100, learning_rate=0.01):
     start = time.time()
     plot_losses = []
     print_loss_total = 0  # Reset every print_every
