@@ -230,3 +230,124 @@ Time = 47m 45s, error = 1.9227
 
 input = What is the common features of LAA and CDA ?
 output = SELECT DISTINCT ?uri WHERE http dbpedia .org resource ontology I http dbpedia .org resource .org ?uri . ?uri ?uri dbpedia .org dbpedia .org dbpedia resource .org .org ?uri . ?uri ?uri ?uri http <EOS>
+
+
+Data 5000, Platform: gcp
+Iters = 75000, hidden layers = 400, learning rate = 0.01
+Time = 185m 10s, error = 2.8478
+Error went down to 0.9 around 70% into the training and went up after 80%
+
+> In which countries is coconut used as a food ingredient ?
+= SELECT DISTINCT ?uri WHERE ?x http dbpedia .org ontology ingredient http dbpedia .org resource Coconut . ?x ht
+tp dbpedia .org property country ?uri . ?x http www .w .org rdf syntax ns type http dbpedia .org ontology Food 
+< SELECT DISTINCT ?uri WHERE http dbpedia .org .org property headquarters http dbpedia .org resource resource re
+source resource resource resource resource resource resource http . . dbpedia . http .org dbpedia . <EOS>
+> Who hold stocks in the bank which is located at Lexington Avenue ?
+= SELECT DISTINCT ?uri WHERE ?x http dbpedia .org ontology locationCity http dbpedia .org resource Lexington Ave
+nue . ?x http dbpedia .org property owner ?uri . ?x http www .w .org rdf syntax ns type http dbpedia .org ontolo
+gy Bank 
+< SELECT DISTINCT ?uri WHERE http dbpedia .org .org property http resource dbpedia resource .org dbpedia . http 
+.org .org dbpedia . http .org . . . . . ?uri http www .w .org rdf syntax ns type http dbpedia .org ontology Tele
+visionShow <EOS>
+> Which office holder s resting place is in Palo Alto California and was succeeded by Adrian A . Basora ?
+=  SELECT DISTINCT ?uri WHERE ?uri http dbpedia .org property restingPlace http dbpedia .org resource Palo Alto 
+California . ?uri http dbpedia .org property successor http dbpedia .org resource Adrian A . Basora . ?uri http 
+www .w .org rdf syntax ns type http dbpedia .org ontology OfficeHolder 
+< SELECT DISTINCT ?uri WHERE http dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedi
+a dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedi
+a dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedi
+a dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia
+> What band was Afrika Baby Bam a part of and often performed with Q Tip ?
+=  SELECT DISTINCT ?uri WHERE http dbpedia .org resource Afrika Baby Bam http dbpedia .org ontology associatedBa
+nd ?uri . http dbpedia .org resource Q Tip musician http dbpedia .org ontology associatedMusicalArtist ?uri 
+< SELECT DISTINCT ?uri WHERE http dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedi
+a dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedi
+a dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedi
+a dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia
+> In how many teams have people previously played who play as defencemen ?
+= SELECT DISTINCT COUNT ?uri WHERE ?x http dbpedia .org property position http dbpedia .org resource Defenceman 
+. ?x http dbpedia .org ontology formerTeam ?uri . ?uri http www .w .org rdf syntax ns type http dbpedia .org ont
+ology SportsTeam 
+< SELECT DISTINCT COUNT ?uri WHERE http dbpedia .org .org property dbpedia dbpedia dbpedia dbpedia dbpedia dbped
+ia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbped
+ia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbped
+ia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia
+input = What is the common features of LAA and CDA ?
+output = SELECT DISTINCT ?uri WHERE http dbpedia .org resource and Air of . .org .org . . resource http .org .or
+g dbpedia . http dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia
+ dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia dbpedia
+ dbpedia
+
+Data 5000, Platform: gcp
+Iters = 20000, hidden layers = 1024, learning rate = 0.01
+Time = 70m 5s, error = 1.6874
+
+> Which hockey team is head coached by Bill Peters ?
+
+= SELECT DISTINCT ?uri WHERE ?uri http dbpedia .org property headCoach http dbpedia .org resource Bill Peters ice hockey . ?uri http www .w .org rdf syntax ns type http dbpedia .org ontology HockeyTeam 
+
+< SELECT DISTINCT ?uri WHERE ?uri http dbpedia .org ontology producer http dbpedia .org resource Virtual Console . ?uri http www .w .org rdf syntax ns type http dbpedia .org ontology Film <EOS>
+
+
+
+> Which TV show developed by J . Michael Stracznski has artist as Christopher Franke ?
+= SELECT DISTINCT ?uri WHERE ?uri http dbpedia .org property artist http dbpedia .org resource Christopher Franke . ?uri http dbpedia .org ontology developer http dbpedia .org resource J . Michael Straczynski . ?uri http www .w .org rdf syntax ns type http dbpedia .org ontology TelevisionShow 
+
+< SELECT DISTINCT ?uri WHERE ?uri http dbpedia .org property artist http dbpedia .org resource Christopher Franke . ?uri http dbpedia .org property network http dbpedia .org resource resource resource ?uri ?uri ?uri ?uri www .w .org rdf syntax ns type http dbpedia .org TelevisionShow <EOS>
+
+
+
+> Was Tim Gunn a guest on The Broken Code ?
+
+= ASK WHERE http dbpedia .org resource The Broken Code http dbpedia .org property guests http dbpedia .org resource Tim Gunn 
+
+< ASK WHERE http dbpedia .org resource The Way http dbpedia .org ontology .org http dbpedia dbpedia resource resource The <EOS>
+
+
+
+> How many companies were founded in places where Dallas is the governing body ?
+
+= SELECT DISTINCT COUNT ?uri WHERE ?x http dbpedia .org property governingBody http dbpedia .org resource Dallas . ?uri http dbpedia .org ontology foundationPlace ?x . ?uri http www .w .org rdf syntax ns type http dbpedia .org ontology Company 
+
+< SELECT DISTINCT COUNT ?uri WHERE ?x http dbpedia .org property restingPlace http dbpedia .org resource Defenceman . ?x ?x http dbpedia .org property ?uri ?uri . http http www .w .org rdf syntax ns type http dbpedia .org ontology <EOS>
+
+
+
+> What is the game whose genre is Mind sport ?
+= SELECT DISTINCT ?uri WHERE ?uri http dbpedia .org ontology genre http dbpedia .org resource Mind sport . ?uri http www .w .org rdf syntax ns type http dbpedia .org ontology Game 
+
+< SELECT DISTINCT ?uri WHERE ?uri http dbpedia .org ontology producer http dbpedia .org resource Michael Deeley . ?uri http www .w .org rdf syntax ns type http dbpedia .org ontology ontology <EOS>
+
+
+
+input = What is the common features of LAA and CDA ?
+
+output = SELECT DISTINCT ?uri WHERE http dbpedia .org resource Microsoft http http dbpedia .org property ontology ?uri . http dbpedia .org resource .org http http dbpedia .org .org .org ontology <EOS>
+
+
+Data 5000, Platform: desktop
+Iters = 75000, hidden layers = 800, learning rate = 0.01
+Time = 209m 37s, error = 11.7390
+
+> In how many nations can I find dishes made of Shallot ?
+= SELECT DISTINCT COUNT ?uri WHERE ?x http dbpedia .org ontology ingredient http dbpedia .org resource Shallot . ?x http dbpedia .org ontology country ?uri . ?uri http www .w .org rdf syntax ns type http dbpedia .org ontology Country 
+< SELECT DISTINCT COUNT ?uri WHERE ?uri dbpedia .org resource . dbpedia . <EOS>
+
+> Where is the headquarter of Regional Transit Authority of Southeast Michigan ?
+=  SELECT DISTINCT ?uri WHERE http dbpedia .org resource Regional Transit Authority of Southeast Michigan http dbpedia .org property headquarters ?uri 
+< SELECT DISTINCT ?uri WHERE ?uri dbpedia .org ontology portrayer ontology United ontology ontology ontology United ontology ontology ontology ontology ontology ontology ontology United ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology
+
+> Is George Lucas the cinematographer of ?
+= ASK WHERE http dbpedia .org resource http dbpedia .org property cinematography http dbpedia .org resource George Lucas 
+< SELECT DISTINCT ?uri WHERE ?uri dbpedia .org ontology series . <EOS>
+
+> How many sports are played at the university whose president is Emanuel de Guzman ?
+= SELECT DISTINCT COUNT ?uri WHERE ?x http dbpedia .org property president http dbpedia .org resource Emanuel de Guzman . ?x http dbpedia .org ontology sport ?uri . ?uri http www .w .org rdf syntax ns type http dbpedia .org ontology Sport 
+< SELECT DISTINCT COUNT ?uri WHERE ?uri resource dbpedia ontology resource SELECT . <EOS>
+
+> Which artists have co starred with Kris Kristofferson ?
+= SELECT DISTINCT ?uri WHERE ?uri http dbpedia .org property associatedActs http dbpedia .org resource Kris Kristofferson . ?uri http www .w .org rdf syntax ns type http dbpedia .org ontology Artist 
+< SELECT DISTINCT ?uri WHERE ?uri ontology .org dbpedia ontology ontology portrayer . <EOS>
+
+input = What is the common features of LAA and CDA ?
+output = SELECT DISTINCT ?uri WHERE ?uri dbpedia .org ontology United ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology
