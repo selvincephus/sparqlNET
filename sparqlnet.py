@@ -237,7 +237,7 @@ def readLangs(lang1, lang2, reverse=False):
 # earlier).
 #
 
-MAX_LENGTH = 15
+MAX_LENGTH = 50
 
 eng_prefixes = (
     "select", "select ",
@@ -775,10 +775,10 @@ def evaluateRandomly(encoder, decoder, n=5):
 #    encoder and decoder are initialized and run ``trainIters`` again.
 #
 
-hidden_size = 2500
+hidden_size = 1024
 encoder1 = EncoderRNN(input_lang.n_words, hidden_size).to(device)
 attn_decoder1 = AttnDecoderRNN(hidden_size, output_lang.n_words, dropout_p=0.1).to(device)
-trainIters(encoder1, attn_decoder1, 45000, print_every=100)
+trainIters(encoder1, attn_decoder1, 20000, print_every=100)
 torch.save(encoder1, 'encoder1')
 torch.save(attn_decoder1, 'attn_decoder1')
 # encoder1 = torch.load('encoder1')
