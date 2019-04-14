@@ -237,7 +237,7 @@ def readLangs(lang1, lang2, reverse=False):
 # earlier).
 #
 
-MAX_LENGTH = 50
+MAX_LENGTH = 15
 
 eng_prefixes = (
     "select", "select ",
