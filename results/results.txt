@@ -408,3 +408,41 @@ Time = 99m 49s, error = 1.6462
 
 input = What is the common features of LAA and CDA ?
 output = SELECT DISTINCT ?uri WHERE dbpedia resource Kerguelen and dbpedia ontology ?uri ?uri ?uri dbpedia dbpedia resource dbpedia dbpedia ontology ?uri ?uri <EOS>
+
+
+
+Data 5000, Platform: gcp
+Iters = 50000, hidden layers = 1024, learning rate = 0.01 and 0.001(avg_loss <0.9)
+Time = 22m 45s, avg_loss = 0.5761, final loss = 0.0906(NA)
+
+> List the things for which people of New Orleans are famous for ?
+= SELECT DISTINCT ?uri WHERE ?x dbpedia property placeOfBirth dbpedia resource New Orleans . ?x dbpedia property knownFor ?uri . ?x rdfsyntaxnstype dbpedia ontology
+ Person 
+< SELECT DISTINCT ?uri WHERE ?x dbpedia ontology nationality dbpedia resource Louisiana ?x ?x dbpedia property nationality ?uri . <EOS>
+> What is the nationality of Aishath Saffa ?
+=  SELECT DISTINCT ?uri WHERE dbpedia resource Aishath Saffa dbpedia property nationality ?uri 
+< SELECT DISTINCT ?uri WHERE dbpedia resource Aishath Saffa dbpedia ontology nationality ?uri <EOS>
+> List the people who influenced the comedian who acted in Good Hair ?
+= SELECT DISTINCT ?uri WHERE dbpedia resource Good Hair dbpedia property starring ?x . ?x dbpedia ontology influencedBy ?uri . ?x rdfsyntaxnstype dbpedia ontology C
+omedian 
+< SELECT DISTINCT ?uri WHERE ?x dbpedia property Hair dbpedia resource starring ?x ?x ?x dbpedia property ?uri ?uri . ?x rdfsyntaxnstype dbpedia ontology <EOS>
+> How many different currencies are used in the places governed by the president of France ?
+= SELECT DISTINCT COUNT ?uri WHERE ?x dbpedia property leaderTitle dbpedia resource President of France . ?x dbpedia ontology currency ?uri . 
+< SELECT DISTINCT COUNT ?uri WHERE ?x dbpedia property leaderTitle dbpedia resource President France . ?x dbpedia ontology currency ?uri . <EOS>
+> In which other places are there companies which are in Ontario too ?
+= SELECT DISTINCT ?uri WHERE ?x dbpedia ontology locationCity dbpedia resource Ontario . ?x dbpedia property locations ?uri . 
+< SELECT DISTINCT ?uri WHERE ?x dbpedia property locationCity dbpedia resource Ontario . ?x dbpedia property locations ?uri . <EOS>
+input = What is the common features of LAA and CDA ?
+output = SELECT DISTINCT ?uri WHERE dbpedia resource Alexander and dbpedia property property ?uri . . resource resource resource dbpedia dbpedia ?uri ?uri ?uri <EOS
+>
+input = Which value package has a product named LAA and CDA as service ?
+output = SELECT DISTINCT ?uri WHERE ?uri dbpedia property services dbpedia resource Microsoft ?uri . ?uri dbpedia products dbpedia resource Microsoft Visual ?uri ?u
+ri rdfsyntaxnstype dbpedia ontology Company <EOS>
+input = Which value package has products LAA and CDA as service ?
+output = SELECT DISTINCT ?uri WHERE ?uri dbpedia property services dbpedia resource OneDrive . ?uri dbpedia property products dbpedia resource Microsoft Visual . ?u
+ri rdfsyntaxnstype ontology ontology <EOS>
+input = Which value package has LAA and CDA as services ?
+output = SELECT DISTINCT ?uri WHERE ?uri dbpedia property services dbpedia resource Outlook .com . ?uri dbpedia property services dbpedia resource Outlook .com . <E
+OS>
+input = How many counters does CDA have ?
+output = SELECT DISTINCT COUNT ?uri WHERE ?uri dbpedia ontology stateOfOrigin dbpedia resource Foxconn . <EOS>
