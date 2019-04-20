@@ -349,5 +349,34 @@ Time = 209m 37s, error = 11.7390
 = SELECT DISTINCT ?uri WHERE ?uri http dbpedia .org property associatedActs http dbpedia .org resource Kris Kristofferson . ?uri http www .w .org rdf syntax ns type http dbpedia .org ontology Artist 
 < SELECT DISTINCT ?uri WHERE ?uri ontology .org dbpedia ontology ontology portrayer . <EOS>
 
-input = What is the common features of LAA and CDA ?
+input 
+= What is the common features of LAA and CDA ?
 output = SELECT DISTINCT ?uri WHERE ?uri dbpedia .org ontology United ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology ontology
+
+
+Data 100, Platform: desktop
+Iters = 20000, hidden layers = 1024, learning rate = 0.01
+Time = 99m 15s, error = 0.0007
+
+> Name the members of boards of Freedom of the City and Trinity House ?
+= SELECT DISTINCT ?uri WHERE ?uri dbpedia ontology board dbpedia resource Freedom of the City . ?uri dbpedia ontology board dbpedia resource Trinity House . 
+< SELECT DISTINCT ?uri WHERE ?uri dbpedia ontology board dbpedia resource Freedom of the City . ?uri dbpedia ontology board dbpedia resource Trinity House . <EOS>
+
+> Was winston churchill the prime minister of Selwyn Lloyd ?
+= ASK WHERE dbpedia resource Selwyn Lloyd dbpedia ontology primeMinister dbpedia resource Winston Churchill 
+< ASK WHERE dbpedia resource Selwyn Lloyd dbpedia ontology primeMinister dbpedia resource Winston Churchill <EOS>
+
+> Which planet was discovered by Johann Gottfired and Urbain Le Verrier ?
+= SELECT DISTINCT ?uri WHERE ?uri dbpedia propertydiscoverer dbpedia resource Johann Gottfried Galle . ?uri dbpedia ontology discoverer dbpedia resource Urbain Le Verrier . ?uri rdfsyntaxnstype dbpedia ontology Planet 
+< SELECT DISTINCT ?uri WHERE ?uri dbpedia propertydiscoverer dbpedia resource Johann Gottfried Galle . ?uri dbpedia ontology discoverer dbpedia resource Urbain Le Verrier . ?uri rdfsyntaxnstype dbpedia ontology Planet <EOS>
+
+> Which comic characters are painted by Bill Finger ?
+= SELECT DISTINCT ?uri WHERE ?uri dbpedia ontology creator dbpedia resource Bill Finger . ?uri rdfsyntaxnstype dbpedia ontology ComicsCharacter 
+< SELECT DISTINCT ?uri WHERE ?uri dbpedia ontology creator dbpedia resource Bill Finger . ?uri rdfsyntaxnstype dbpedia ontology ComicsCharacter <EOS>
+
+> Was winston churchill the prime minister of Selwyn Lloyd ?
+= ASK WHERE dbpedia resource Selwyn Lloyd dbpedia ontology primeMinister dbpedia resource Winston Churchill 
+< ASK WHERE dbpedia resource Selwyn Lloyd dbpedia ontology primeMinister dbpedia resource Winston Churchill <EOS>
+
+input = What is the common features of LAA and CDA ?
+output = SELECT DISTINCT ?uri WHERE dbpedia resource Abhijit Kunte dbpedia propertyknownFor ?uri . dbpedia resource Virtual Kasparov dbpedia ontology genre ?uri <EOS>
