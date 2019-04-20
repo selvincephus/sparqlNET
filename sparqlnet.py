@@ -782,7 +782,7 @@ def evaluateRandomly(encoder, decoder, n=5):
 hidden_size = 1024
 encoder1 = EncoderRNN(input_lang.n_words, hidden_size).to(device)
 attn_decoder1 = AttnDecoderRNN(hidden_size, output_lang.n_words, dropout_p=0.1).to(device)
-trainIters(encoder1, attn_decoder1, 20000, print_every=100)
+trainIters(encoder1, attn_decoder1, 50000, print_every=100)
 torch.save(encoder1, 'encoder1')
 torch.save(attn_decoder1, 'attn_decoder1')
 # encoder1 = torch.load('encoder1')
@@ -842,13 +842,13 @@ def evaluateAndShowAttention(input_sentence):
         encoder1, attn_decoder1, input_sentence)
     print('input =', input_sentence)
     print('output =', ' '.join(output_words))
-    showAttention(input_sentence, output_words, attentions)
+    # showAttention(input_sentence, output_words, attentions)
 
 evaluateAndShowAttention("What is the common features of LAA and CDA ?")
 evaluateAndShowAttention("Which value package has a product named LAA and CDA as service ?")
 evaluateAndShowAttention("Which value package has products LAA and CDA as service ?")
 evaluateAndShowAttention("Which value package has LAA and CDA as services ?")
-evaluateAndShowAttention("How many counters does CDA have?")
+evaluateAndShowAttention("How many counters does CDA have ?")
 
 
 
