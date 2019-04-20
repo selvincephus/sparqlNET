@@ -155,9 +155,9 @@ EOS_token = 1
 class Lang:
     def __init__(self, name):
         self.name = name
-        self.word2index = {"humidity":2,"solve":3,"alarm":4,"features":5,"LAA":6,"CDA":7}
+        self.word2index = {"humidity":2,"solve":3,"alarm":4,"features":5,"LAA":6,"CDA":7,"counters":8, "value":9, "package":10}
         self.word2count = {}
-        self.index2word = {0: "SOS", 1: "EOS"}
+        self.index2word = {0:"SOS",1:"EOS",2:"humidity",3:"solve",4:"alarm",5:"features",6:"LAA",7:"CDA",8:"counters",9:"value",10:"package"}
 
         self.n_words = len(self.word2index)  # Count SOS and EOS
 
@@ -659,8 +659,8 @@ def trainIters(encoder, decoder, n_iters, print_every=100, plot_every=100, learn
         if iter % print_every == 0:
             print_loss_avg = print_loss_total / print_every
             print_loss_total = 0
-            print('%s (%d %d%%) %.4f' % (timeSince(start, iter / n_iters),
-                                         iter, iter / n_iters * 100, print_loss_avg))
+            print('%s (%d %d%%) %.4f %.4f' % (timeSince(start, iter / n_iters),
+                                         iter, iter / n_iters * 100, print_loss_avg, loss))
 
         # if iter % plot_every == 0:
         #     plot_loss_avg = plot_loss_total / plot_every
@@ -841,6 +841,12 @@ def evaluateAndShowAttention(input_sentence):
     # showAttention(input_sentence, output_words, attentions)
 
 evaluateAndShowAttention("What is the common features of LAA and CDA ?")
+evaluateAndShowAttention("Which value package has a product named LAA and CDA as service ?")
+evaluateAndShowAttention("Which value package has products LAA and CDA as service ?")
+evaluateAndShowAttention("Which value package has LAA and CDA as services ?")
+evaluateAndShowAttention("How many counters does CDA have?")
+
+
 
 # evaluateAndShowAttention("What is the default value of humidity ?")
 # evaluateAndShowAttention("What are the changes in release two ?")
