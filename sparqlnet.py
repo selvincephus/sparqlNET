@@ -639,6 +639,7 @@ def trainIters(encoder, decoder, n_iters, print_every=100, plot_every=100, learn
     plot_losses = []
     print_loss_total = 0  # Reset every print_every
     plot_loss_total = 0  # Reset every plot_every
+    print_loss_avg = 9999999
 
     encoder_optimizer = optim.SGD(encoder.parameters(), lr=learning_rate)
     decoder_optimizer = optim.SGD(decoder.parameters(), lr=learning_rate)
@@ -653,6 +654,7 @@ def trainIters(encoder, decoder, n_iters, print_every=100, plot_every=100, learn
 
         loss = train(input_tensor, target_tensor, encoder,
                      decoder, encoder_optimizer, decoder_optimizer, criterion)
+
         print_loss_total += loss
         plot_loss_total += loss
 
@@ -661,11 +663,13 @@ def trainIters(encoder, decoder, n_iters, print_every=100, plot_every=100, learn
             print_loss_total = 0
             print('%s (%d %d%%) %.4f %.4f' % (timeSince(start, iter / n_iters),
                                          iter, iter / n_iters * 100, print_loss_avg, loss))
+        # if print_loss_avg < 0.9:
+        #     learning_rate = 0.001
 
-        # if iter % plot_every == 0:
-        #     plot_loss_avg = plot_loss_total / plot_every
-        #     plot_losses.append(plot_loss_avg)
-        #     plot_loss_total = 0
+        if iter % plot_every == 0:
+            plot_loss_avg = plot_loss_total / plot_every
+            plot_losses.append(plot_loss_avg)
+            plot_loss_total = 0
 
     # showPlot(plot_losses)
 
@@ -838,7 +842,7 @@ def evaluateAndShowAttention(input_sentence):
         encoder1, attn_decoder1, input_sentence)
     print('input =', input_sentence)
     print('output =', ' '.join(output_words))
-    # showAttention(input_sentence, output_words, attentions)
+    showAttention(input_sentence, output_words, attentions)
 
 evaluateAndShowAttention("What is the common features of LAA and CDA ?")
 evaluateAndShowAttention("Which value package has a product named LAA and CDA as service ?")
