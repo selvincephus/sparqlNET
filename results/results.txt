@@ -408,3 +408,14 @@ Time = 99m 49s, error = 1.6462
 
 input = What is the common features of LAA and CDA ?
 output = SELECT DISTINCT ?uri WHERE dbpedia resource Kerguelen and dbpedia ontology ?uri ?uri ?uri dbpedia dbpedia resource dbpedia dbpedia ontology ?uri ?uri <EOS>
+
+input = What is the common features of LAA and CDA ?
+output = SELECT DISTINCT ?uri WHERE dbpedia resource Kerguelen and dbpedia ontology ?uri ?uri ?uri dbpedia dbpedia resource dbpedia dbpedia ontology ?uri ?uri <EOS>
+input = Which value package has a product named LAA and CDA as service ?
+output = SELECT DISTINCT ?uri WHERE ?uri dbpedia ontology services dbpedia resource Microsoft Azure . ?uri dbpedia property dbpedia dbpedia resource resource . . ?uri rdfsyntaxnstype dbpedia dbpedia <EOS>
+input = Which value package has products LAA and CDA as service ?
+output = SELECT DISTINCT ?uri WHERE ?uri dbpedia ontology services dbpedia resource Microsoft . . ?uri dbpedia dbpedia dbpedia resource Microsoft <EOS>
+input = Which value package has LAA and CDA as services ?
+output = SELECT DISTINCT ?uri WHERE ?uri dbpedia ontology founder dbpedia resource Bacillales . ?uri dbpedia dbpedia dbpedia dbpedia resource resource . ?uri ?uri rdfsyntaxnstype dbpedia dbpedia <EOS>
+input = How many counters does CDA have ?
+output = SELECT DISTINCT COUNT ?uri WHERE ?x dbpedia ontology ingredient dbpedia resource <EOS>
