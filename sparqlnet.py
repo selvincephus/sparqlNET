@@ -95,8 +95,8 @@ import torch.nn as nn
 from torch import optim
 import torch.nn.functional as F
 
-# device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-device = "cuda"
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+# device = "cuda"
 print(device)
 ######################################################################
 # Loading data files
@@ -780,13 +780,13 @@ def evaluateRandomly(encoder, decoder, n=5):
 #
 
 hidden_size = 1024
-encoder1 = EncoderRNN(input_lang.n_words, hidden_size).to(device)
-attn_decoder1 = AttnDecoderRNN(hidden_size, output_lang.n_words, dropout_p=0.1).to(device)
-trainIters(encoder1, attn_decoder1, 50000, print_every=100)
-torch.save(encoder1, 'encoder1')
-torch.save(attn_decoder1, 'attn_decoder1')
-# encoder1 = torch.load('encoder1')
-# attn_decoder1 = torch.load('attn_decoder1')
+# encoder1 = EncoderRNN(input_lang.n_words, hidden_size).to(device)
+# attn_decoder1 = AttnDecoderRNN(hidden_size, output_lang.n_words, dropout_p=0.1).to(device)
+# trainIters(encoder1, attn_decoder1, 50000, print_every=100)
+# torch.save(encoder1, 'encoder1')
+# torch.save(attn_decoder1, 'attn_decoder1')
+encoder1 = torch.load('encoder1', map_location='cpu')
+attn_decoder1 = torch.load('attn_decoder1', map_location='cpu')
 
 ######################################################################
 #
@@ -844,6 +844,7 @@ def evaluateAndShowAttention(input_sentence):
     print('output =', ' '.join(output_words))
     # showAttention(input_sentence, output_words, attentions)
 
+
 evaluateAndShowAttention("What is the common features of LAA and CDA ?")
 evaluateAndShowAttention("Which value package has a product named LAA and CDA as service ?")
 evaluateAndShowAttention("Which value package has products LAA and CDA as service ?")
@@ -862,26 +863,16 @@ evaluateAndShowAttention("How many counters does CDA have ?")
 #
 # evaluateAndShowAttention("Does the Alba River flow into a lake?")
 
-######################################################################
-# Exercises
-# =========
-#
-# -  Try with a different dataset
-#
-#    -  Another language pair
-#    -  Human → Machine (e.g. IOT commands)
-#    -  Chat → Response
-#    -  Question → Answer
-#
-# -  Replace the embeddings with pre-trained word embeddings such as word2vec or
-#    GloVe
-# -  Try with more layers, more hidden units, and more sentences. Compare
-#    the training time and results.
-# -  If you use a translation file where pairs have two of the same phrase
-#    (``I am test \t I am test``), you can use this as an autoencoder. Try
-#    this:
-#
-#    -  Train as an autoencoder
-#    -  Save only the Encoder network
-#    -  Train a new Decoder for translation from there
-#
+
+######################################################################################
+#  SPARQL endpoint
+query = "SELECT DISTINCT ?n WHERE { <http://dbpedia.org/resource/Steinsee> dbo:maximumDepth ?n . }"
+from SPARQLWrapper import SPARQLWrapper, JSON
+sparql = SPARQLWrapper("http://dbpedia.org/sparql")
+sparql.setReturnFormat(JSON)
+
+sparql.setQuery(query)  # the previous query as a literal string
+
+resp = sparql.query().convert()
+value = resp['results']['bindings'][0]['n']['value']
+print('Sparql query respone: ', value)
