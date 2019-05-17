@@ -95,6 +95,11 @@ import torch.nn as nn
 from torch import optim
 import torch.nn.functional as F
 
+from SPARQLWrapper import SPARQLWrapper, JSON
+import data_preprocess
+
+
+
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # device = "cuda"
 print(device)
@@ -785,8 +790,10 @@ hidden_size = 1024
 # trainIters(encoder1, attn_decoder1, 50000, print_every=100)
 # torch.save(encoder1, 'encoder1')
 # torch.save(attn_decoder1, 'attn_decoder1')
-encoder1 = torch.load('encoder1', map_location='cpu')
-attn_decoder1 = torch.load('attn_decoder1', map_location='cpu')
+# encoder1 = torch.load('encoder1', map_location='cpu')
+# attn_decoder1 = torch.load('attn_decoder1', map_location='cpu')
+encoder1 = torch.load('encoder1')
+attn_decoder1 = torch.load('attn_decoder1')
 
 ######################################################################
 #
@@ -836,19 +843,42 @@ def showAttention(input_sentence, output_words, attentions):
 
     plt.show()
 
+######################################################################################
+#  SPARQL endpoint
+
+def call_to_sparql_endpoint(query):
+    # query = "SELECT DISTINCT ?n WHERE { <http://dbpedia.org/resource/Steinsee> dbo:maximumDepth ?n . }"
+    print(query)
+    sparql = SPARQLWrapper("http://dbpedia.org/sparql")
+    sparql.setReturnFormat(JSON)
+
+    sparql.setQuery(query)  # the previous query as a literal string
+
+    resp = sparql.query().convert()
+    value = resp['results']['bindings'][0]['n']['value']
+    print('Sparql query respone: ', value)
+
 
 def evaluateAndShowAttention(input_sentence):
+    sparqliser = data_preprocess.SparqlPostprocessing()
     output_words, attentions = evaluate(
         encoder1, attn_decoder1, input_sentence)
     print('input =', input_sentence)
     print('output =', ' '.join(output_words))
+    sparql_output = ' '.join(output_words)
+    sparql_query = sparqliser.sparqilise(sparql_output)
+    call_to_sparql_endpoint(sparql_query)
+
     # showAttention(input_sentence, output_words, attentions)
 
 
-evaluateAndShowAttention("What is the common features of LAA and CDA ?")
-evaluateAndShowAttention("Which value package has a product named LAA and CDA as service ?")
-evaluateAndShowAttention("Which value package has products LAA and CDA as service ?")
-evaluateAndShowAttention("Which value package has LAA and CDA as services ?")
+links2token = {"http://dbpedia.org/resource/":"dbpedia resource", "http://dbpedia.org/ontology/":"dbpedia ontology",
+               "http://www.w3.org/1999/02/22-rdf-syntax-ns#type":"22rdfsyntaxnstype",
+               "http://dbpedia.org/property/":"dbpedia property"}
+# evaluateAndShowAttention("What is the common features of LAA and CDA ?")
+# evaluateAndShowAttention("Which value package has a product named LAA and CDA as service ?")
+# evaluateAndShowAttention("Which value package has products LAA and CDA as service ?")
+# evaluateAndShowAttention("Which value package has LAA and CDA as services ?")
 evaluateAndShowAttention("How many counters does CDA have ?")
 
 
@@ -862,17 +892,3 @@ evaluateAndShowAttention("How many counters does CDA have ?")
 # evaluateAndShowAttention("Does Por tu amor have more episodes than Game of Thrones?")
 #
 # evaluateAndShowAttention("Does the Alba River flow into a lake?")
-
-
-######################################################################################
-#  SPARQL endpoint
-query = "SELECT DISTINCT ?n WHERE { <http://dbpedia.org/resource/Steinsee> dbo:maximumDepth ?n . }"
-from SPARQLWrapper import SPARQLWrapper, JSON
-sparql = SPARQLWrapper("http://dbpedia.org/sparql")
-sparql.setReturnFormat(JSON)
-
-sparql.setQuery(query)  # the previous query as a literal string
-
-resp = sparql.query().convert()
-value = resp['results']['bindings'][0]['n']['value']
-print('Sparql query respone: ', value)

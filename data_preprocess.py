@@ -1,31 +1,43 @@
-import json
-import csv
-import time
+###################################################################################################
+#  Written by Selvin Cephus Jayakumar
+#  Processing the sparql queries to be "learnable" in training.
+#  The following tokens were created,
+#  http://dbpedia.org/resource/ - dbpedia resource
+#  http://dbpedia.org/ontology/ - dbpedia ontology
+#  http://www.w3.org/1999/02/22-rdf-syntax-ns#type - 22rdfsyntaxnstype
+#  http://dbpedia.org/property/ - dbpedia property
+#  < - starturl
+#  > - endurl
+#  ( - openbrace
+#  ) - closebrace
+###################################################################################################
+
 import urllib.parse as urlparse
 import re
 import string
 
-url = 'http://dbpedia.org/ontology/creator'
-sparql = 'SELECT DISTINCT ?uri WHERE {?uri <http://dbpedia.org/ontology/creator> ' \
-         '<http://dbpedia.org/resource/Bill_Finger>  ' \
-         '. ?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/ComicsCharacter>}'
-parsed = urlparse.urlparse(url)
-# Example: 'http://dbpedia.org/ontology/creator'
-# Parsed data - scheme: http/Https; hostname/netloc: dbpedia.org ;  path: /ontology/creator
-print(parsed.scheme, parsed.hostname, parsed.path)
-link = sparql[sparql.find("<")+1:sparql.find(">")]
-print(link)
-link = re.findall('\<(.*?)\>', sparql)
-print(link)
-print('url parsed')
+class SparqlPostprocessing:
+    def __init__(self):
+        pass
+        # query = "SELECT DISTINCT ?uri WHERE openbrace ?uri closebrace starturl dbpedia ontology creator endurl starturl dbpedia resource Bill Finger endurl . ?uri starturl rdfsyntaxnstype endurl starturl dbpedia ontology ComicsCharacter endurl"
+        # sparql_tokens = query.split(' ')
+    def sparqilise(self, query):
+        query = query.replace("starturl", " <")
+        query = query.replace("endurl", "> ")
+        query = query.replace("openbrace", " (")
+        query = query.replace("closebrace", ") ")
 
-infile = open('data/eng-spar.txt', mode='r', newline='', encoding="utf8")
-temp = 0
-for row in infile:
-    # print(len(row))
-    words = row.split(' ')
-    # print(len(words))
-    if len(words) > temp:
-        temp = len(words)
-    # print(row)
-print(temp)
+        if re.search("dbpedia resource", query):
+            query = query.replace("dbpedia resource", "http://dbpedia.org/resource/")
+
+        if re.search("dbpedia ontology", query):
+            query = query.replace("dbpedia ontology", "http://dbpedia.org/ontology/")
+
+        if re.search("rdfsyntaxnstype", query):
+            query = query.replace("rdfsyntaxnstype", "http://www.w3.org/1999/02/22-rdf-syntax-ns#type")
+
+        if re.search("dbpedia property", query):
+            query = query.replace("dbpedia property", "http://dbpedia.org/property/")
+
+        return query
+
