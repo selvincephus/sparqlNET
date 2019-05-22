@@ -787,7 +787,7 @@ def evaluateRandomly(encoder, decoder, n=5):
 hidden_size = 1024
 encoder1 = EncoderRNN(input_lang.n_words, hidden_size).to(device)
 attn_decoder1 = AttnDecoderRNN(hidden_size, output_lang.n_words, dropout_p=0.1).to(device)
-trainIters(encoder1, attn_decoder1, 5000, print_every=100)
+trainIters(encoder1, attn_decoder1, 50000, print_every=500)
 torch.save(encoder1, 'encoder1')
 torch.save(attn_decoder1, 'attn_decoder1')
 # encoder1 = torch.load('encoder1', map_location='cpu')
@@ -852,11 +852,23 @@ def call_to_sparql_endpoint(query):
     sparql = SPARQLWrapper("http://dbpedia.org/sparql")
     sparql.setReturnFormat(JSON)
 
-    sparql.setQuery(query)  # the previous query as a literal string
+    # sparql.setQuery(query)  # the previous query as a literal string
 
-    resp = sparql.query().convert()
-    value = resp['results']['bindings'][0]['n']['value']
-    print('Sparql query respone: ', value)
+    # resp = sparql.query().convert()
+    resp = sparql.query()
+    resp_dict = resp.convert()
+    value = resp_dict['results']['bindings']
+    print('Subject       Predicate        Object')
+    for index in range(len(value)):
+        subject = value[index]['s']
+        predicate = value[index]['p']
+        object = value[index]['o']
+        print('{} {} {}'.format(subject, predicate, object))
+        if index == 100:
+            return True
+        # for s, p, o in value[index].items():
+        #    print('{} {} {}'.format(s, p, o))
+    # print('Sparql query respone: ', value)
 
 
 def evaluateAndShowAttention(input_sentence):
@@ -879,8 +891,8 @@ links2token = {"http://dbpedia.org/resource/":"dbpedia resource", "http://dbpedi
 # evaluateAndShowAttention("Which value package has a product named LAA and CDA as service ?")
 # evaluateAndShowAttention("Which value package has products LAA and CDA as service ?")
 # evaluateAndShowAttention("Which value package has LAA and CDA as services ?")
-evaluateAndShowAttention("How many counters does CDA have ?")
-
+# evaluateAndShowAttention("How many counters does CDA have ?")
+# evaluateAndShowAttention("Which comic characters are painted by Bill Finger?")
 
 
 # evaluateAndShowAttention("What is the default value of humidity ?")
