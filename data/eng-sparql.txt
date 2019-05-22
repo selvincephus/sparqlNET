@@ -224,7 +224,7 @@ Which TV show developed by J. Michael Stracznski has artist as Christopher Frank
 Name the largest city in the county where there is a Cy-Fair High School.,SELECT DISTINCT ?uri WHERE { dbr:Cy-Fair_High_School dbo:county ?x . ?x dbo:largestCity ?uri  . }
 What are the academic interests of the past members of Senser?,SELECT DISTINCT ?uri WHERE { dbr:Senser dbp:pastMembers ?x . ?x dbp:mainInterests ?uri  . }
 Name the common associate band of Blayse and Teddy Riley ?,SELECT DISTINCT ?uri WHERE { dbr:Blayse dbo:associatedBand ?uri. dbr:Teddy_Riley dbo:associatedBand ?uri . }
-"Who is the performer of album which has the song ""To Where You Are"" ?",SELECT DISTINCT ?uri WHERE { dbr:To_Where_You_Are dbo:album ?x . ?x dbo:artist ?uri  . }
+Who is the performer of album which has the song ""To Where You Are"" ?,SELECT DISTINCT ?uri WHERE { dbr:To_Where_You_Are dbo:album ?x . ?x dbo:artist ?uri  . }
 Does the merlin express have a hub at the cibano international airport?,ASK WHERE { dbr:Merlin_Express dbo:hubAirport dbr:Cibao_International_Airport }
 How many people live in Wilton Connecticut?,SELECT DISTINCT COUNT(?uri) WHERE {?uri dbp:residence dbr:Wilton_Connecticut  . }
 For how many different teams have Ontarians been drafted ?,SELECT DISTINCT COUNT(?uri) WHERE { ?x dbp:placeOfBirth dbr:Ontario . ?x dbo:draftTeam ?uri  . }
@@ -291,7 +291,7 @@ Count the number of characters of the play whose one of the character is Catwoma
 what cities are located on the sides of mediterranean sea?, SELECT DISTINCT ?uri WHERE { dbr:Mediterranean_Sea dbp:cities ?uri }
 Is Bacillus belong to the domain Bacteria?,ASK WHERE { dbr:Bacillus dbp:domain dbr:Bacteria }
 How many currencies are in used in places where people speak French?,SELECT DISTINCT COUNT(?uri) WHERE { ?x dbo:officialLanguage dbr:French_language . ?x dbo:currency ?uri  . ?uri rdf:type dbo:Currency}
-"What political party has governed both in Baraily,MP and Jowai?",SELECT DISTINCT ?uri WHERE { dbr:Baraily dbo:leaderName ?uri. dbr:Jowai dbo:leaderName ?uri . }
+What political party has governed both in Baraily MP and Jowai?,SELECT DISTINCT ?uri WHERE { dbr:Baraily dbo:leaderName ?uri. dbr:Jowai dbo:leaderName ?uri . }
 Which officers fought in the war of Siege of Fort Recovery?,SELECT DISTINCT ?uri WHERE {?uri dbo:battle dbr:Siege_of_Fort_Recovery  . ?uri rdf:type dbo:OfficeHolder}
 How many writers speak a language belonging to the Germanic kind of languages?,SELECT DISTINCT COUNT(?uri) WHERE { ?x dbo:languageFamily dbr:Germanic_languages . ?uri dbp:language ?x  . ?uri rdf:type dbo:Writer}
 Was Duanne Allman known to play the Les Paul?,ASK WHERE { dbr:Duane_Allman dbp:notableInstruments dbr:Gibson_Les_Paul }
@@ -843,7 +843,7 @@ How many other important things have been written by the creator of Stuart Alan 
 What is the person known for who is the movie director of Sleepy-Time Squirrel ?,SELECT DISTINCT ?uri WHERE { dbr:Sleepy-Time_Squirrel dbp:director ?x . ?x dbo:knownFor ?uri  . ?x rdf:type dbo:Person}
 What kind of music is produced at the record label founded by Andre Bourgeois?,SELECT DISTINCT ?uri WHERE { ?x dbp:founder dbr:André_Bourgeois . ?x dbo:genre ?uri  . ?x rdf:type dbo:RecordLabel}
 Which political party of Arunachal Pradesh Legislative Assembly election 2014 was the leader of Rishikesh ?, SELECT DISTINCT ?uri WHERE { dbr:Arunachal_Pradesh_Legislative_Assembly_election_2014 dbp:party ?uri. dbr:Rishikesh dbo:leaderName ?uri}
-"What shows used to air on the channel which was earlier known as ""The Comedy Central""?",SELECT DISTINCT ?uri WHERE { ?x dbo:predecessor dbr:The_Comedy_Channel_(United_States) . ?uri dbp:distributor ?x  . ?uri rdf:type dbo:TelevisionShow}
+What shows used to air on the channel which was earlier known as ""The Comedy Central""?,SELECT DISTINCT ?uri WHERE { ?x dbo:predecessor dbr:The_Comedy_Channel_(United_States) . ?uri dbp:distributor ?x  . ?uri rdf:type dbo:TelevisionShow}
 What is the common battle fought by Stephen Urban and Ali Habib Mahmud ?, SELECT DISTINCT ?uri WHERE { dbr:Stephen_Urban dbo:battle ?uri. dbr:Ali_Habib_Mahmud dbp:battles ?uri}
 Who is the cover artist of Doctor Mirabilis (novel) ?, SELECT DISTINCT ?uri WHERE { dbr:Doctor_Mirabilis_(novel) dbp:coverArtist ?uri }
 Where did Whitney Wistert debut?, SELECT DISTINCT ?uri WHERE { dbr:Whitey_Wistert dbp:debutteam ?uri }
@@ -1863,7 +1863,7 @@ Name the TV show whose producer is Stephen E. Ambrose and company is HBO ?,SELEC
 What are the movies whose musicians's home town is Volos?,SELECT DISTINCT ?uri WHERE { ?x dbo:hometown dbr:Volos . ?uri dbp:music ?x  . ?uri rdf:type dbo:Film}
 Name the fictional character whose relatives are Huey Dewey and Louie and is of species American Pekin duck?,SELECT DISTINCT ?uri WHERE {?uri dbp:relatives dbr:Huey_Dewey_and_Louie . ?uri dbo:species dbr:American_Pekin_duck  . ?uri rdf:type dbo:FictionalCharacter}
 List the school of Bobby Skinstad?, SELECT DISTINCT ?uri WHERE { dbr:Bobby_Skinstad dbp:school ?uri }
-Who was the coach of marquette Golden Eagles men's basketball team-2012,13 season ?, SELECT DISTINCT ?uri WHERE { dbr:2012–13_Marquette_Golden_Eagles_men's_basketball_team dbo:coach ?uri }
+Who was the coach of marquette Golden Eagles men's basketball team-2012 13 season ?, SELECT DISTINCT ?uri WHERE { dbr:2012–13_Marquette_Golden_Eagles_men's_basketball_team dbo:coach ?uri }
 Who authored the work illustrated by Hiroyuki Takei?,SELECT DISTINCT ?uri WHERE { ?x dbo:illustrator dbr:Hiroyuki_Takei . ?x dbp:author ?uri  . }
 What made Jon Speelman and Eric Schiller famous?, SELECT DISTINCT ?uri WHERE { dbr:Jon_Speelman dbo:field ?uri. dbr:Eric_Schiller dbo:knownFor ?uri}
 In which wars army men awarded with the Croix de Guerre fought?,SELECT DISTINCT ?uri WHERE { ?x dbp:awards dbr:Croix_de_guerre_1939–1945_(France) . ?x dbp:battles ?uri  . ?x rdf:type dbo:MilitaryPerson}
@@ -2319,7 +2319,7 @@ What is the Ceremonial County of Port of Tilbury ?, SELECT DISTINCT ?uri WHERE {
 What is the current team of John McGuinness (motorcycle racer) ?, SELECT DISTINCT ?uri WHERE { dbr:John_McGuinness_(motorcycle_racer) dbp:currentTeam ?uri }
 What is the ideology of the Union of Cambodian Democrats which is also the ideology of Palang Dharma Party ?,SELECT DISTINCT ?uri WHERE { dbr:Union_of_Cambodian_Democrats dbo:ideology ?uri. dbr:Palang_Dharma_Party dbo:ideology ?uri . }
 What is the honorary title of the narrator of Everything Will Be OK?,SELECT DISTINCT ?uri WHERE { dbr:Everything_Will_Be_OK dbo:narrator ?x . ?x dbo:award ?uri  . }
-"Does the white river flow into the connecticut river{u'_id': u'97e02dcf44aa43c1b7cc7a7c155b118f',",ASK WHERE { dbr:Connecticut_River dbo:rightTributary dbr:White_River_(Vermont) }
+Does the white river flow into the connecticut river{u'_id': u'97e02dcf44aa43c1b7cc7a7c155b118f',ASK WHERE { dbr:Connecticut_River dbo:rightTributary dbr:White_River_(Vermont) }
 Who is the famous relative of Kelly Osbourne?,SELECT DISTINCT ?uri WHERE {?uri dbp:relatives dbr:Kelly_Osbourne  . }
 What are some cars similar to luxury cars?,SELECT DISTINCT ?uri WHERE { ?x dbp:class dbr:Luxury_vehicle . ?x dbp:related ?uri  . ?x rdf:type dbo:Automobile}
 What is the total number of other destinations of the airlines whose one of the destinations is Mediterranean Sea?, SELECT DISTINCT COUNT(?uri) WHERE { ?x dbp:destinations dbr:Mediterranean_Sea . ?x dbp:destinations ?uri }
@@ -2457,7 +2457,7 @@ What is the birthplace of Ludovic Boi which is also the residence of Fernando Au
 How many non-fiction subject are there of the books whose one of the non-fiction subject is Ankh-Morpork City Watch ?, SELECT DISTINCT COUNT(?uri) WHERE { ?x dbo:nonFictionSubject dbr:Ankh-Morpork_City_Watch . ?x dbo:nonFictionSubject ?uri }
 Name the show whose theme composing band previously also had Bryan Mantia?,SELECT DISTINCT ?uri WHERE { ?x dbo:formerBandMember dbr:Bryan_Mantia . ?uri dbp:themeMusicComposer ?x  . ?uri rdf:type dbo:TelevisionShow}
 How many contries surround the seas on the banks of which is the city of Cancun?,SELECT DISTINCT COUNT(?uri) WHERE { ?x dbp:cities dbr:Cancún . ?x dbo:country ?uri  . }
-"List all the settlements which has a part named Seguin,Texas ?",SELECT DISTINCT ?uri WHERE { ?x dbo:part dbr:Seguin_Texas . ?x dbo:part ?uri  . ?x rdf:type dbo:Settlement}
+List all the settlements which has a part named Seguin Texas ?,SELECT DISTINCT ?uri WHERE { ?x dbo:part dbr:Seguin_Texas . ?x dbo:part ?uri  . ?x rdf:type dbo:Settlement}
 List all the wine regions of the grapes whose one of the wine region is Mississippi ?,SELECT DISTINCT ?uri WHERE { ?x dbo:wineRegion dbr:Mississippi . ?x dbo:wineRegion ?uri  . ?x rdf:type dbo:Grape}
 Which city was designed by saleen Pator which is also the birht location of Jimmy Diggs ?, SELECT DISTINCT ?uri WHERE { dbr:Saleen_S5S_Raptor dbp:designer ?uri. dbr:Jimmy_Diggs dbo:birthPlace ?uri}
 Name the university whose affiliations's foundation is in Washington D.C.?,SELECT DISTINCT ?uri WHERE { ?x dbp:foundation dbr:Washington_D.C. . ?uri dbp:affiliations ?x  . ?uri rdf:type dbo:University}
@@ -4438,7 +4438,7 @@ Who founded the league which was won by Joe McKeehen?,SELECT DISTINCT ?uri WHERE
 Give me some nominees of politicians in the US?,SELECT DISTINCT ?uri WHERE { ?x dbo:residence dbr:United_States . ?x dbo:nominee ?uri  . ?x rdf:type dbo:OfficeHolder}
 To what did the parliament member swore her oath to whose has sons is Lohan Ratwatte?,SELECT DISTINCT ?uri WHERE { ?x dbo:child dbr:Lohan_Ratwatte . ?x dbp:allegiance ?uri  . ?x rdf:type dbo:MemberOfParliament}
 In which races have Tillingdale's horses participated?,SELECT DISTINCT ?uri WHERE { ?x dbp:owner dbr:Tillingdale . ?x dbp:race ?uri  . ?x rdf:type dbo:Horse}
-"Which country's national motto is ""Truth prevails""?",SELECT DISTINCT ?uri WHERE {?uri dbp:nationalMotto dbr:Truth_prevails  . ?uri rdf:type dbo:Country}
+Which country's national motto is Truth prevails?,SELECT DISTINCT ?uri WHERE {?uri dbp:nationalMotto dbr:Truth_prevails  . ?uri rdf:type dbo:Country}
 What is the alma mater of Andrew W. Lewis ?, SELECT DISTINCT ?uri WHERE { dbr:Andrew_W._Lewis dbo:almaMater ?uri }
 Name the tv series produced by Stephen Ambrose and Erik Bork?,SELECT DISTINCT ?uri WHERE { ?uri dbo:producer dbr:Stephen_E._Ambrose . ?uri dbo:producer dbr:Erik_Bork . ?uri rdf:type dbo:TelevisionShow}
 Which movies did Mark Steven edit?,SELECT DISTINCT ?uri WHERE {?uri dbp:editing dbr:Mark_Stevens_(film_editor)  . ?uri rdf:type dbo:Film}
@@ -4511,7 +4511,7 @@ Who is the appointer of Earl B. Ruth ?, SELECT DISTINCT ?uri WHERE { dbr:Earl_B.
 Which partner of the Tim Mathieson is also the primeminister of the Mike Kelly (Australian politician) ?, SELECT DISTINCT ?uri WHERE { dbr:Tim_Mathieson dbo:partner ?uri. dbr:Mike_Kelly_(Australian_politician) dbp:primeminister ?uri}
 Which river does Katima Mulilo Bridge cross?, SELECT DISTINCT ?uri WHERE { dbr:Katima_Mulilo_Bridge dbp:crosses ?uri }
 Which city is Black Grape Global located ?, SELECT DISTINCT ?uri WHERE { dbr:Black_Grape_Global dbo:locationCity ?uri }
-"To which company is the service ""Nintendo eShop"" associated with?",SELECT DISTINCT ?uri WHERE {?uri dbp:services dbr:Nintendo_eShop  . ?uri rdf:type dbo:Company}
+To which company is the service Nintendo eShop associated with?,SELECT DISTINCT ?uri WHERE {?uri dbp:services dbr:Nintendo_eShop  . ?uri rdf:type dbo:Company}
 Name the city of Phil-Ellena ?, SELECT DISTINCT ?uri WHERE { dbr:Phil-Ellena dbo:city ?uri }
 Who preceded Lucius Crus as an office holder?,SELECT DISTINCT ?uri WHERE {?uri dbo:predecessor dbr:Lucius_Cornelius_Lentulus_Crus  . ?uri rdf:type dbo:OfficeHolder}
 To which nation did David Animle Hanses owe his allegiance?, SELECT DISTINCT ?uri WHERE { dbr:David_Animle_Hansen dbp:allegiance ?uri }
@@ -4692,7 +4692,7 @@ Spanish harlem incident and girl from the north country were originally composed
 Who is the founder of Oprah Winfrey Network (U.S. TV channel) ?, SELECT DISTINCT ?uri WHERE { dbr:Oprah_Winfrey_Network_(U.S._TV_channel) dbp:founder ?uri }
  How many scientist have won an award by the society led by Venkatraman Ramakrishnan?,SELECT DISTINCT COUNT(?uri) WHERE { ?x dbp:leaderName dbr:Venkatraman_Ramakrishnan . ?uri dbp:prizes ?x  . ?uri rdf:type dbo:Scientist}
 Which place of Geography Club is the location of Seattle Great Wheel ?, SELECT DISTINCT ?uri WHERE { dbr:Seattle_Great_Wheel dbp:locationTown ?uri. dbr:Geography_Club_(play) dbp:place ?uri}
-"Which television show is based in Massachusetts and has opening theme as ""Where Everybody Knows Your Name"" ?",SELECT DISTINCT ?uri WHERE {?uri dbo:openingTheme dbr:Where_Everybody_Knows_Your_Name . ?uri dbo:location dbr:Massachusetts  . ?uri rdf:type dbo:TelevisionShow}
+Which television show is based in Massachusetts and has opening theme as ""Where Everybody Knows Your Name"" ?,SELECT DISTINCT ?uri WHERE {?uri dbo:openingTheme dbr:Where_Everybody_Knows_Your_Name . ?uri dbo:location dbr:Massachusetts  . ?uri rdf:type dbo:TelevisionShow}
 What is the career of George Arceneaux Jr. ?, SELECT DISTINCT ?uri WHERE { dbr:George_Arceneaux_Jr. dbo:occupation ?uri }
 Name the prospect team of Mikhail Pashnin ?, SELECT DISTINCT ?uri WHERE { dbr:Mikhail_Pashnin dbp:prospectTeam ?uri }
 Who are the maintainers of the bridges which cross the pandaruan river?,SELECT DISTINCT ?uri WHERE { ?x dbo:crosses dbr:Pandaruan_River . ?x dbo:maintainedBy ?uri  . ?x rdf:type dbo:Bridge}

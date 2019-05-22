@@ -286,7 +286,7 @@ def prepareData(lang1, lang2, reverse=False):
     return input_lang, output_lang, pairs
 
 
-input_lang, output_lang, pairs = prepareData('eng', 'spar_processed', False)
+input_lang, output_lang, pairs = prepareData('eng', 'sparql', False)
 print(random.choice(pairs))
 
 
