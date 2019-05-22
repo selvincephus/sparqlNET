@@ -199,7 +199,7 @@ def unicodeToAscii(s):
 def normalizeString(s):
     # s = unicodeToAscii(s.lower().strip())
     s = re.sub(r"([.!?])", r" \1", s)
-    s = re.sub(r"[^a-zA-Z.!?]+", r" ", s)
+    # s = re.sub(r"[^a-zA-Z.!?]+", r" ", s)
     return s
 
 
@@ -286,7 +286,7 @@ def prepareData(lang1, lang2, reverse=False):
     return input_lang, output_lang, pairs
 
 
-input_lang, output_lang, pairs = prepareData('eng', 'sparql', False)
+input_lang, output_lang, pairs = prepareData('eng', 'spar_processed', False)
 print(random.choice(pairs))
 
 
@@ -785,15 +785,15 @@ def evaluateRandomly(encoder, decoder, n=5):
 #
 
 hidden_size = 1024
-# encoder1 = EncoderRNN(input_lang.n_words, hidden_size).to(device)
-# attn_decoder1 = AttnDecoderRNN(hidden_size, output_lang.n_words, dropout_p=0.1).to(device)
-# trainIters(encoder1, attn_decoder1, 50000, print_every=100)
-# torch.save(encoder1, 'encoder1')
-# torch.save(attn_decoder1, 'attn_decoder1')
+encoder1 = EncoderRNN(input_lang.n_words, hidden_size).to(device)
+attn_decoder1 = AttnDecoderRNN(hidden_size, output_lang.n_words, dropout_p=0.1).to(device)
+trainIters(encoder1, attn_decoder1, 5000, print_every=100)
+torch.save(encoder1, 'encoder1')
+torch.save(attn_decoder1, 'attn_decoder1')
 # encoder1 = torch.load('encoder1', map_location='cpu')
 # attn_decoder1 = torch.load('attn_decoder1', map_location='cpu')
-encoder1 = torch.load('encoder1')
-attn_decoder1 = torch.load('attn_decoder1')
+# encoder1 = torch.load('encoder1')
+# attn_decoder1 = torch.load('attn_decoder1')
 
 ######################################################################
 #
@@ -860,17 +860,17 @@ def call_to_sparql_endpoint(query):
 
 
 def evaluateAndShowAttention(input_sentence):
+    input_sentence = normalizeString(input_sentence)
     sparqliser = data_preprocess.SparqlPostprocessing()
     output_words, attentions = evaluate(
         encoder1, attn_decoder1, input_sentence)
     print('input =', input_sentence)
     print('output =', ' '.join(output_words))
-    sparql_output = ' '.join(output_words)
-    sparql_query = sparqliser.sparqilise(sparql_output)
-    call_to_sparql_endpoint(sparql_query)
+    # sparql_output = ' '.join(output_words)
+    # sparql_query = sparqliser.sparqilise(sparql_output)
+    # call_to_sparql_endpoint(sparql_query)
 
     # showAttention(input_sentence, output_words, attentions)
-
 
 links2token = {"http://dbpedia.org/resource/":"dbpedia resource", "http://dbpedia.org/ontology/":"dbpedia ontology",
                "http://www.w3.org/1999/02/22-rdf-syntax-ns#type":"22rdfsyntaxnstype",
