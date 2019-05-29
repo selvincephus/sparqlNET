@@ -95,6 +95,10 @@ import torch.nn as nn
 from torch import optim
 import torch.nn.functional as F
 
+# import pandas as pd
+from sklearn.model_selection import train_test_split
+
+
 from SPARQLWrapper import SPARQLWrapper, JSON
 import data_preprocess
 
@@ -214,23 +218,31 @@ def readLangs(lang1, lang2, reverse=False):
     print("Reading lines...")
 
     # Read the file and split into lines
-    lines = open('data/%s-%s.txt' % (lang1, lang2), encoding="utf8").\
+
+    data = open('data/%s-%s.txt' % (lang1, lang2), encoding="utf8").\
         read().strip().split('\n')
+    noOfExamples = len(data)
+    noOfTestExamples = round(noOfExamples*0.1)
+    random.shuffle(data)
+    train_data = data[:noOfTestExamples]
+    test_data = data[noOfTestExamples:]
+
 
     # Split every line into pairs and normalize
     # pairs = [[normalizeString(s) for s in l.split('\t')] for l in lines]
-    pairs = [[normalizeString(s) for s in l.split(',')] for l in lines]
+    train_pairs = [[normalizeString(s) for s in l.split(',')] for l in train_data]
+    test_pairs = [[normalizeString(s) for s in l.split(',')] for l in test_data]
 
     # Reverse pairs, make Lang instances
     if reverse:
-        pairs = [list(reversed(p)) for p in pairs]
+        pairs = [list(reversed(p)) for p in train_pairs]
         input_lang = Lang(lang2)
         output_lang = Lang(lang1)
     else:
         input_lang = Lang(lang1)
         output_lang = Lang(lang2)
 
-    return input_lang, output_lang, pairs
+    return input_lang, output_lang, test_pairs, train_pairs
 
 
 ######################################################################
@@ -268,26 +280,44 @@ def filterPairs(pairs):
 #
 
 def prepareData(lang1, lang2, reverse=False):
-    input_lang, output_lang, pairs = readLangs(lang1, lang2, reverse)
-    print("Read %s sentence pairs" % len(pairs))
-   # print(pairs)
+    input_lang, output_lang, train_pairs, test_pairs = readLangs(lang1, lang2, reverse)
+    #  TRAIN SET
+    print("Read %s train sentence pairs" % len(train_pairs))
+    # print(pairs)
     #pairs = filterPairs(pairs)
-    print("Trimmed to %s sentence pairs" % len(pairs))
+    print("Trimmed to %s train sentence pairs" % len(train_pairs))
     print("Counting words...")
-    for pair in pairs:
+    for pair in train_pairs:
         # print(len(pair))
         # print(pair)
         if len(pair) == 2:
             input_lang.addSentence(pair[0])
             output_lang.addSentence(pair[1])
-    print("Counted words:")
+    print("Counted words in train set:")
     print(input_lang.name, input_lang.n_words)
     print(output_lang.name, output_lang.n_words)
-    return input_lang, output_lang, pairs
+
+    # TEST SET
+    print("Read %s train sentence pairs" % len(test_pairs))
+    # print(pairs)
+    # pairs = filterPairs(pairs)
+    print("Trimmed to %s train sentence pairs" % len(test_pairs))
+    print("Counting words...")
+    for pair in test_pairs:
+        # print(len(pair))
+        # print(pair)
+        if len(pair) == 2:
+            input_lang.addSentence(pair[0])
+            output_lang.addSentence(pair[1])
+    print("Counted words in train set:")
+    print(input_lang.name, input_lang.n_words)
+    print(output_lang.name, output_lang.n_words)
+
+    return input_lang, output_lang, train_pairs, test_pairs
 
 
-input_lang, output_lang, pairs = prepareData('eng', 'sparql', False)
-print(random.choice(pairs))
+input_lang, output_lang, train_pairs, test_pairs = prepareData('eng', 'sparql', False)
+# print(random.choice(train_pairs))
 
 
 ######################################################################
@@ -756,7 +786,7 @@ def evaluate(encoder, decoder, sentence, max_length=MAX_LENGTH):
 
 def evaluateRandomly(encoder, decoder, n=5):
     for i in range(n):
-        pair = random.choice(pairs)
+        pair = random.choice(test_pairs)
         print('>', pair[0])
         print('=', pair[1])
         output_words, attentions = evaluate(encoder, decoder, pair[0])
@@ -785,15 +815,15 @@ def evaluateRandomly(encoder, decoder, n=5):
 #
 
 hidden_size = 1024
-encoder1 = EncoderRNN(input_lang.n_words, hidden_size).to(device)
-attn_decoder1 = AttnDecoderRNN(hidden_size, output_lang.n_words, dropout_p=0.1).to(device)
-trainIters(encoder1, attn_decoder1, 50000, print_every=500)
-torch.save(encoder1, 'encoder1')
-torch.save(attn_decoder1, 'attn_decoder1')
-# encoder1 = torch.load('encoder1', map_location='cpu')
-# attn_decoder1 = torch.load('attn_decoder1', map_location='cpu')
-# encoder1 = torch.load('encoder1')
-# attn_decoder1 = torch.load('attn_decoder1')
+# encoder1 = EncoderRNN(input_lang.n_words, hidden_size).to(device)
+# attn_decoder1 = AttnDecoderRNN(hidden_size, output_lang.n_words, dropout_p=0.1).to(device)
+# trainIters(encoder1, attn_decoder1, 50000, print_every=500)
+# torch.save(encoder1, 'encoder1')
+# torch.save(attn_decoder1, 'attn_decoder1')
+# encoder1 = torch.load('encoder-decoder/encoder1_minproc', map_location='cpu')
+# attn_decoder1 = torch.load('encoder-decoder/attn_decoder1_minproc', map_location='cpu')
+encoder1 = torch.load('encoder_decoder/encoder1_minproc')
+attn_decoder1 = torch.load('encoder_decoder/attn_decoder1_minproc')
 
 ######################################################################
 #
@@ -863,7 +893,7 @@ def call_to_sparql_endpoint(query):
         subject = value[index]['s']
         predicate = value[index]['p']
         object = value[index]['o']
-        print('{} {} {}'.format(subject, predicate, object))
+        # print('{} {} {}'.format(subject, predicate, object))
         if index == 100:
             return True
         # for s, p, o in value[index].items():
@@ -878,21 +908,19 @@ def evaluateAndShowAttention(input_sentence):
         encoder1, attn_decoder1, input_sentence)
     print('input =', input_sentence)
     print('output =', ' '.join(output_words))
-    # sparql_output = ' '.join(output_words)
-    # sparql_query = sparqliser.sparqilise(sparql_output)
-    # call_to_sparql_endpoint(sparql_query)
+    sparql_output = ' '.join(output_words)
+    sparql_query = sparqliser.sparqilise(sparql_output)
+    sparql_query = re.sub(r'\<EOS\>', '', sparql_query)
+    call_to_sparql_endpoint(sparql_query)
 
     # showAttention(input_sentence, output_words, attentions)
 
-links2token = {"http://dbpedia.org/resource/":"dbpedia resource", "http://dbpedia.org/ontology/":"dbpedia ontology",
-               "http://www.w3.org/1999/02/22-rdf-syntax-ns#type":"22rdfsyntaxnstype",
-               "http://dbpedia.org/property/":"dbpedia property"}
 # evaluateAndShowAttention("What is the common features of LAA and CDA ?")
 # evaluateAndShowAttention("Which value package has a product named LAA and CDA as service ?")
 # evaluateAndShowAttention("Which value package has products LAA and CDA as service ?")
 # evaluateAndShowAttention("Which value package has LAA and CDA as services ?")
 # evaluateAndShowAttention("How many counters does CDA have ?")
-# evaluateAndShowAttention("Which comic characters are painted by Bill Finger?")
+evaluateAndShowAttention("Which comic characters are painted by Bill Finger?")
 
 
 # evaluateAndShowAttention("What is the default value of humidity ?")
