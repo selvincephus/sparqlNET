@@ -2,6 +2,9 @@
 #  Written by Selvin Cephus Jayakumar
 ###################################################################################################
 import re
+import signal
+import sys
+
 import torch
 from SPARQLWrapper import SPARQLWrapper, JSON
 
@@ -12,9 +15,9 @@ from data_preprocess import DataPrep
 
 MAX_LENGTH = 50
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
 SOS_token = 0
 EOS_token = 1
+
 
 class EncoderRNN(nn.Module):
     def __init__(self, input_size, hidden_size):
@@ -32,6 +35,7 @@ class EncoderRNN(nn.Module):
 
     def initHidden(self):
         return torch.zeros(1, 1, self.hidden_size, device=device)
+
 
 class DecoderRNN(nn.Module):
     def __init__(self, hidden_size, output_size):
@@ -53,6 +57,7 @@ class DecoderRNN(nn.Module):
 
     def initHidden(self):
         return torch.zeros(1, 1, self.hidden_size, device=device)
+
 
 class AttnDecoderRNN(nn.Module):
     def __init__(self, hidden_size, output_size, dropout_p=0.1, max_length=MAX_LENGTH):
@@ -90,16 +95,6 @@ class AttnDecoderRNN(nn.Module):
     def initHidden(self):
         return torch.zeros(1, 1, self.hidden_size, device=device)
 
-dt_prep = DataPrep('eng', 'sparql', False, device)
-input_lang, output_lang, pairs = dt_prep.prepareData()
-
-hidden_size = 1024
-encoder1 = EncoderRNN(input_lang.n_words, hidden_size).to(device)
-attn_decoder1 = AttnDecoderRNN(hidden_size, output_lang.n_words, dropout_p=0.1).to(device)
-encoder1 = torch.load('encoder_decoder/encoder1_minproc', map_location='cpu')
-attn_decoder1 = torch.load('encoder_decoder/attn_decoder1_minproc', map_location='cpu')
-# encoder1 = torch.load('encoder_decoder/encoder1_minproc')
-# attn_decoder1 = torch.load('encoder_decoder/attn_decoder1_minproc')
 
 def evaluate(encoder, decoder, sentence, max_length=MAX_LENGTH):
     with torch.no_grad():
@@ -136,41 +131,70 @@ def evaluate(encoder, decoder, sentence, max_length=MAX_LENGTH):
 
         return decoded_words, decoder_attentions[:di + 1]
 
+
 def call_to_sparql_endpoint(query):
     # query = "SELECT DISTINCT ?n WHERE { <http://dbpedia.org/resource/Steinsee> dbo:maximumDepth ?n . }"
     print(query)
     sparql = SPARQLWrapper("http://dbpedia.org/sparql")
     sparql.setReturnFormat(JSON)
-
-    # sparql.setQuery(query)  # the previous query as a literal string
-
-    # resp = sparql.query().convert()
     resp = sparql.query()
-    resp_dict = resp.convert()
-    value = resp_dict['results']['bindings']
-    print('Subject       Predicate        Object')
-    for index in range(len(value)):
-        subject = value[index]['s']
-        predicate = value[index]['p']
-        object = value[index]['o']
-        # print('{} {} {}'.format(subject, predicate, object))
-        if index == 100:
-            return True
+    if resp:
+        resp_dict = resp.convert()
+        value = resp_dict['results']['bindings']
+        # print('Subject       Predicate        Object')
+        for index in range(len(value)):
+            subject = value[index]['s']
+            predicate = value[index]['p']
+            object = value[index]['o']
+            # print('{} {} {}'.format(subject, predicate, object))
+            if index == 100:
+                return True
+        return True
+    else:
+        return False
         # for s, p, o in value[index].items():
         #    print('{} {} {}'.format(s, p, o))
     # print('Sparql query respone: ', value)
 
 
-def evaluateAndShowAttention(input_sentence):
+def generate_sparql(input_sentence):
     input_sentence = dt_prep.normalizeString(input_sentence)
-    # sparqliser = SparqlPostprocessing()
     output_words, attentions = evaluate(
         encoder1, attn_decoder1, input_sentence)
-    print('input =', input_sentence)
-    print('output =', ' '.join(output_words))
+    # print('input =', input_sentence)
+    print('Expected query =', ' '.join(output_words))
     sparql_output = ' '.join(output_words)
-    # sparql_query = sparqliser.sparqilise(sparql_output)
     sparql_query = re.sub(r'\<EOS\>', '', sparql_output)
-    call_to_sparql_endpoint(sparql_query)
+    return sparql_query
 
-evaluateAndShowAttention("Which comic characters are painted by Bill Finger?")
+
+def exit_gracefully(sig, frame):
+    print('Exiting gracefully...')
+    sys.exit(0)
+
+
+if __name__ == "__main__":
+    signal.signal(signal.SIGINT, exit_gracefully)
+    print("Setting up. Please wait...")
+    dt_prep = DataPrep('eng', 'sparql', False, device)
+    input_lang, output_lang, pairs = dt_prep.prepareData()
+
+    hidden_size = 1024
+    encoder1 = EncoderRNN(input_lang.n_words, hidden_size).to(device)
+    attn_decoder1 = AttnDecoderRNN(hidden_size, output_lang.n_words, dropout_p=0.1).to(device)
+    encoder1 = torch.load('encoder_decoder/encoder1_minproc', map_location='cpu')
+    attn_decoder1 = torch.load('encoder_decoder/attn_decoder1_minproc', map_location='cpu')
+    # encoder1 = torch.load('encoder_decoder/encoder1_minproc')
+    # attn_decoder1 = torch.load('encoder_decoder/attn_decoder1_minproc')
+    print("Type a question in english to get a sparql response.")
+    while True:
+        question = input('Question: ')
+        query = generate_sparql(question)
+        if query:
+            # print("Sparql generated. Querying endpoing...")
+            print("SPARQL: ", query)
+            if call_to_sparql_endpoint(query):
+                print("Query successful!!!")
+            else:
+                print("Query failed.")
+        # generate_sparql("Which comic characters are painted by Bill Finger?")
