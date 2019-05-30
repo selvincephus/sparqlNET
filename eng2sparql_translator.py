@@ -96,10 +96,10 @@ input_lang, output_lang, pairs = dt_prep.prepareData()
 hidden_size = 1024
 encoder1 = EncoderRNN(input_lang.n_words, hidden_size).to(device)
 attn_decoder1 = AttnDecoderRNN(hidden_size, output_lang.n_words, dropout_p=0.1).to(device)
-# encoder1 = torch.load('encoder-decoder/encoder1_minproc', map_location='cpu')
-# attn_decoder1 = torch.load('encoder-decoder/attn_decoder1_minproc', map_location='cpu')
-encoder1 = torch.load('encoder_decoder/encoder1_minproc')
-attn_decoder1 = torch.load('encoder_decoder/attn_decoder1_minproc')
+encoder1 = torch.load('encoder_decoder/encoder1_minproc', map_location='cpu')
+attn_decoder1 = torch.load('encoder_decoder/attn_decoder1_minproc', map_location='cpu')
+# encoder1 = torch.load('encoder_decoder/encoder1_minproc')
+# attn_decoder1 = torch.load('encoder_decoder/attn_decoder1_minproc')
 
 def evaluate(encoder, decoder, sentence, max_length=MAX_LENGTH):
     with torch.no_grad():
