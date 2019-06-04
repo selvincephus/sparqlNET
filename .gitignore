@@ -108,7 +108,7 @@ venv.bak/
 workspace.xml
 tasks.xml
 
-.*
+.*/*.*
 !/.gitignore
 
 .floydexpt
