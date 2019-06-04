@@ -78,7 +78,7 @@ class DataPrep:
         return s
 
     def readLangs(self):
-        print("Reading lines...")
+        # print("Reading lines...")
         # Read the file and split into lines
 
         data = open('data/%s-%s.txt' % (self.lang1, self.lang2), encoding="utf8"). \
@@ -100,16 +100,16 @@ class DataPrep:
 
     def prepareData(self):
         input_lang, output_lang, pairs = self.readLangs()
-        print("Read %s train sentence pairs" % len(pairs))
-        print("Trimmed to %s train sentence pairs" % len(pairs))
-        print("Counting words...")
+        # print("Read %s train sentence pairs" % len(pairs))
+        # print("Trimmed to %s train sentence pairs" % len(pairs))
+        # print("Counting words...")
         for pair in pairs:
             if len(pair) == 2:
                 input_lang.addSentence(pair[0])
                 output_lang.addSentence(pair[1])
-        print("Counted words in train set:")
-        print(input_lang.name, input_lang.n_words)
-        print(output_lang.name, output_lang.n_words)
+        # print("Counted words in train set:")
+        # print(input_lang.name, input_lang.n_words)
+        # print(output_lang.name, output_lang.n_words)
         return input_lang, output_lang, pairs
 
     def normalizeString(self, s):

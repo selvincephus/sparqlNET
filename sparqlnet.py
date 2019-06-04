@@ -161,6 +161,16 @@ SOS_token = 0
 EOS_token = 1
 
 
+def load_vectors(fname):
+    fin = open(fname, 'r', encoding='utf-8', newline='\n', errors='ignore')
+    n, d = map(int, fin.readline().split())
+    data = {}
+    for line in fin:
+        tokens = line.rstrip().split(' ')
+        data[tokens[0]] = map(float, tokens[1:])
+    return data
+
+
 class Lang:
     def __init__(self, name):
         self.name = name
@@ -288,8 +298,6 @@ def prepareData(lang1, lang2, reverse=False):
     print("Trimmed to %s train sentence pairs" % len(train_pairs))
     print("Counting words...")
     for pair in train_pairs:
-        # print(len(pair))
-        # print(pair)
         if len(pair) == 2:
             input_lang.addSentence(pair[0])
             output_lang.addSentence(pair[1])
@@ -929,6 +937,3 @@ evaluateAndShowAttention("Which comic characters are painted by Bill Finger?")
 # evaluateAndShowAttention("what is the torque value of grounding cable ?")
 # evaluateAndShowAttention("How to solve the alarm ?")
 #
-# evaluateAndShowAttention("Does Por tu amor have more episodes than Game of Thrones?")
-#
-# evaluateAndShowAttention("Does the Alba River flow into a lake?")
