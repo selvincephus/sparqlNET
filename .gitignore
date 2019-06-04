@@ -109,6 +109,7 @@ workspace.xml
 tasks.xml
 
 .*
+!/.gitignore
 
 .floydexpt
 .floydignore
