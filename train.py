@@ -90,6 +90,14 @@ import string
 import re
 import random
 
+import time
+import math
+
+import matplotlib.pyplot as plt
+# plt.switch_backend('agg')
+import matplotlib.ticker as ticker
+import numpy as np
+
 import torch
 import torch.nn as nn
 from torch import optim
@@ -102,11 +110,6 @@ from sklearn.model_selection import train_test_split
 from SPARQLWrapper import SPARQLWrapper, JSON
 import data_preprocess
 
-
-
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-# device = "cuda"
-print(device)
 ######################################################################
 # Loading data files
 # ==================
@@ -156,29 +159,21 @@ print(device)
 # (``index2word``) dictionaries, as well as a count of each word
 # ``word2count`` to use to later replace rare words.
 #
-
-SOS_token = 0
-EOS_token = 1
-
-
-def load_vectors(fname):
-    fin = open(fname, 'r', encoding='utf-8', newline='\n', errors='ignore')
-    n, d = map(int, fin.readline().split())
-    data = {}
-    for line in fin:
-        tokens = line.rstrip().split(' ')
-        data[tokens[0]] = map(float, tokens[1:])
-    return data
+MAX_LENGTH = 30
 
 
 class Lang:
     def __init__(self, name):
         self.name = name
-        self.word2index = {"humidity":2,"solve":3,"alarm":4,"features":5,"LAA":6,"CDA":7,"counters":8, "value":9, "package":10}
+        # self.word2index = {"humidity":2,"solve":3,"alarm":4,"features":5,"LAA":6,"CDA":7,"counters":8, "value":9,
+        # "package":10}
+        self.word2index = {}
         self.word2count = {}
-        self.index2word = {0:"SOS",1:"EOS",2:"humidity",3:"solve",4:"alarm",5:"features",6:"LAA",7:"CDA",8:"counters",9:"value",10:"package"}
+        self.index2word = {0:"SOS",1:"EOS"}
+        # self.index2word = {0:"SOS",1:"EOS",2:"humidity",3:"solve",4:"alarm",5:"features",6:"LAA",7:"CDA",8:"counters",
+        # 9:"value",10:"package"}
 
-        self.n_words = len(self.word2index)  # Count SOS and EOS
+        self.n_words = len(self.index2word)  # Count SOS and EOS
 
 
     def addSentence(self, sentence):
@@ -228,31 +223,28 @@ def readLangs(lang1, lang2, reverse=False):
     print("Reading lines...")
 
     # Read the file and split into lines
-
-    data = open('data/%s-%s.txt' % (lang1, lang2), encoding="utf8").\
+    data = []
+    lines = open('data/%s-%s.txt' % (lang1, lang2), encoding="utf8").\
         read().strip().split('\n')
-    noOfExamples = len(data)
-    noOfTestExamples = round(noOfExamples*0.1)
-    random.shuffle(data)
-    train_data = data[:noOfTestExamples]
-    test_data = data[noOfTestExamples:]
-
+    for line in lines:
+        if len(line) < 2:
+            pass
+        else:
+            data.append(line)
 
     # Split every line into pairs and normalize
-    # pairs = [[normalizeString(s) for s in l.split('\t')] for l in lines]
-    train_pairs = [[normalizeString(s) for s in l.split(',')] for l in train_data]
-    test_pairs = [[normalizeString(s) for s in l.split(',')] for l in test_data]
+    pairs = [[normalizeString(s) for s in l.split('\t')] for l in data]
 
     # Reverse pairs, make Lang instances
     if reverse:
-        pairs = [list(reversed(p)) for p in train_pairs]
+        pairs = [list(reversed(p)) for p in pairs]
         input_lang = Lang(lang2)
         output_lang = Lang(lang1)
     else:
         input_lang = Lang(lang1)
         output_lang = Lang(lang2)
 
-    return input_lang, output_lang, test_pairs, train_pairs
+    return input_lang, output_lang, pairs
 
 
 ######################################################################
@@ -264,11 +256,6 @@ def readLangs(lang1, lang2, reverse=False):
 # earlier).
 #
 
-MAX_LENGTH = 50
-
-eng_prefixes = (
-    "select", "select ",
-    "ask", "ask ")
 
 
 def filterPair(p):
@@ -290,41 +277,25 @@ def filterPairs(pairs):
 #
 
 def prepareData(lang1, lang2, reverse=False):
-    input_lang, output_lang, train_pairs, test_pairs = readLangs(lang1, lang2, reverse)
-    #  TRAIN SET
-    print("Read %s train sentence pairs" % len(train_pairs))
-    # print(pairs)
+    input_lang, output_lang, pairs = readLangs(lang1, lang2, reverse)
+    print("Read %s sentence pairs" % len(pairs))
+   # print(pairs)
     #pairs = filterPairs(pairs)
-    print("Trimmed to %s train sentence pairs" % len(train_pairs))
+    print("Trimmed to %s sentence pairs" % len(pairs))
     print("Counting words...")
-    for pair in train_pairs:
-        if len(pair) == 2:
-            input_lang.addSentence(pair[0])
-            output_lang.addSentence(pair[1])
-    print("Counted words in train set:")
-    print(input_lang.name, input_lang.n_words)
-    print(output_lang.name, output_lang.n_words)
-
-    # TEST SET
-    print("Read %s train sentence pairs" % len(test_pairs))
-    # print(pairs)
-    # pairs = filterPairs(pairs)
-    print("Trimmed to %s train sentence pairs" % len(test_pairs))
-    print("Counting words...")
-    for pair in test_pairs:
+    for pair in pairs:
         # print(len(pair))
         # print(pair)
         if len(pair) == 2:
             input_lang.addSentence(pair[0])
             output_lang.addSentence(pair[1])
-    print("Counted words in train set:")
+    print("Counted words:")
     print(input_lang.name, input_lang.n_words)
     print(output_lang.name, output_lang.n_words)
+    return input_lang, output_lang, pairs
 
-    return input_lang, output_lang, train_pairs, test_pairs
 
 
-input_lang, output_lang, train_pairs, test_pairs = prepareData('eng', 'sparql', False)
 # print(random.choice(train_pairs))
 
 
@@ -557,7 +528,7 @@ def tensorFromSentence(lang, sentence):
 def tensorsFromPair(pair):
     input_tensor = tensorFromSentence(input_lang, pair[0])
     target_tensor = tensorFromSentence(output_lang, pair[1])
-    return (input_tensor, target_tensor)
+    return input_tensor, target_tensor
 
 
 ######################################################################
@@ -586,8 +557,6 @@ def tensorsFromPair(pair):
 # choose to use teacher forcing or not with a simple if statement. Turn
 # ``teacher_forcing_ratio`` up to use more of it.
 #
-
-teacher_forcing_ratio = 0.5
 
 
 def train(input_tensor, target_tensor, encoder, decoder, encoder_optimizer, decoder_optimizer, criterion, max_length=MAX_LENGTH):
@@ -647,9 +616,6 @@ def train(input_tensor, target_tensor, encoder, decoder, encoder_optimizer, deco
 # remaining given the current time and progress %.
 #
 
-import time
-import math
-
 
 def asMinutes(s):
     m = math.floor(s / 60)
@@ -677,7 +643,7 @@ def timeSince(since, percent):
 # of examples, time so far, estimated time) and average loss.
 #
 
-def trainIters(encoder, decoder, n_iters, print_every=100, plot_every=100, learning_rate=0.01):
+def trainIters(encoder, decoder, train_pairs, n_iters, print_every=100, plot_every=100):
     start = time.time()
     plot_losses = []
     print_loss_total = 0  # Reset every print_every
@@ -686,7 +652,7 @@ def trainIters(encoder, decoder, n_iters, print_every=100, plot_every=100, learn
 
     encoder_optimizer = optim.SGD(encoder.parameters(), lr=learning_rate)
     decoder_optimizer = optim.SGD(decoder.parameters(), lr=learning_rate)
-    training_pairs = [tensorsFromPair(random.choice(pairs))
+    training_pairs = [tensorsFromPair(random.choice(train_pairs))
                       for i in range(n_iters)]
     criterion = nn.NLLLoss()
 
@@ -713,8 +679,32 @@ def trainIters(encoder, decoder, n_iters, print_every=100, plot_every=100, learn
             plot_loss_avg = plot_loss_total / plot_every
             plot_losses.append(plot_loss_avg)
             plot_loss_total = 0
+    return encoder, decoder
 
     # showPlot(plot_losses)
+
+def validateTest(encoder, decoder, test_pairs):
+    start = time.time()
+    print_loss_total = 0  # Reset every print_every
+    plot_loss_total = 0  # Reset every plot_every
+
+    encoder_optimizer = optim.SGD(encoder.parameters(), lr=learning_rate)
+    decoder_optimizer = optim.SGD(decoder.parameters(), lr=learning_rate)
+    criterion = nn.NLLLoss()
+    for test_pair in test_pairs:
+        input_tensor, target_tensor = tensorsFromPair(test_pair)
+        # training_pair = training_pairs[iter - 1]
+        # input_tensor = test_pair[0]
+        # target_tensor = test_pair[1]
+
+        loss = train(input_tensor, target_tensor, encoder,
+                     decoder, encoder_optimizer, decoder_optimizer, criterion)
+
+        print_loss_total += loss
+        plot_loss_total += loss
+    avg_loss = print_loss_total / len(test_pairs)
+    print('Validation loss: ', avg_loss)
+    return avg_loss
 
 
 ######################################################################
@@ -724,12 +714,6 @@ def trainIters(encoder, decoder, n_iters, print_every=100, plot_every=100, learn
 # Plotting is done with matplotlib, using the array of loss values
 # ``plot_losses`` saved while training.
 #
-
-import matplotlib.pyplot as plt
-# plt.switch_backend('agg')
-import matplotlib.ticker as ticker
-import numpy as np
-
 
 def showPlot(points):
     plt.figure()
@@ -801,43 +785,6 @@ def evaluateRandomly(encoder, decoder, n=5):
         output_sentence = ' '.join(output_words)
         print('<', output_sentence)
         print('')
-
-
-######################################################################
-# Training and Evaluating
-# =======================
-#
-# With all these helper functions in place (it looks like extra work, but
-# it makes it easier to run multiple experiments) we can actually
-# initialize a network and start training.
-#
-# Remember that the input sentences were heavily filtered. For this small
-# dataset we can use relatively small networks of 256 hidden nodes and a
-# single GRU layer. After about 40 minutes on a MacBook CPU we'll get some
-# reasonable results.
-#
-# .. Note::
-#    If you run this notebook you can train, interrupt the kernel,
-#    evaluate, and continue training later. Comment out the lines where the
-#    encoder and decoder are initialized and run ``trainIters`` again.
-#
-
-hidden_size = 1024
-# encoder1 = EncoderRNN(input_lang.n_words, hidden_size).to(device)
-# attn_decoder1 = AttnDecoderRNN(hidden_size, output_lang.n_words, dropout_p=0.1).to(device)
-# trainIters(encoder1, attn_decoder1, 50000, print_every=500)
-# torch.save(encoder1, 'encoder1')
-# torch.save(attn_decoder1, 'attn_decoder1')
-# encoder1 = torch.load('encoder-decoder/encoder1_minproc', map_location='cpu')
-# attn_decoder1 = torch.load('encoder-decoder/attn_decoder1_minproc', map_location='cpu')
-encoder1 = torch.load('encoder_decoder/encoder1_minproc')
-attn_decoder1 = torch.load('encoder_decoder/attn_decoder1_minproc')
-
-######################################################################
-#
-
-evaluateRandomly(encoder1, attn_decoder1)
-
 
 ######################################################################
 # Visualizing Attention
@@ -923,6 +870,49 @@ def evaluateAndShowAttention(input_sentence):
 
     # showAttention(input_sentence, output_words, attentions)
 
+
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+# device = "cuda"
+print(device)
+SOS_token = 0
+EOS_token = 1
+eng_prefixes = (
+    "select", "select ",
+    "ask", "ask ")
+input_lang, output_lang, pairs = prepareData('eng', 'sparql', False)
+learning_rate = 0.01
+teacher_forcing_ratio = 0.5
+hidden_size = 1024
+encoder1 = EncoderRNN(input_lang.n_words, hidden_size).to(device)
+attn_decoder1 = AttnDecoderRNN(hidden_size, output_lang.n_words, dropout_p=0.1).to(device)
+no_of_epoch = 10
+iters = 10000
+total_data = len(pairs)
+total_train = int(total_data * 0.9)
+total_test = int(total_data - total_train)
+
+for epoch in range(no_of_epoch):
+    print('Epoch: ', epoch)
+    random.shuffle(pairs)
+    train_pairs = pairs[:total_train]
+    test_pairs = pairs[total_train:]
+    trainIters(encoder1, attn_decoder1, train_pairs, iters, print_every=500)
+    loss = validateTest(encoder1, attn_decoder1, test_pairs)
+    if loss < 0.9:
+        learning_rate = 0.001
+    evaluateRandomly(encoder1, attn_decoder1)
+torch.save(encoder1, 'encoder1')
+torch.save(attn_decoder1, 'attn_decoder1')
+# encoder1 = torch.load('encoder-decoder/encoder1_minproc', map_location='cpu')
+# attn_decoder1 = torch.load('encoder-decoder/attn_decoder1_minproc', map_location='cpu')
+# encoder1 = torch.load('encoder_decoder/encoder1_minproc')
+# attn_decoder1 = torch.load('encoder_decoder/attn_decoder1_minproc')
+
+######################################################################
+#
+
+# evaluateRandomly(encoder1, attn_decoder1)
 # evaluateAndShowAttention("What is the common features of LAA and CDA ?")
 # evaluateAndShowAttention("Which value package has a product named LAA and CDA as service ?")
 # evaluateAndShowAttention("Which value package has products LAA and CDA as service ?")

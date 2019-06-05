@@ -31,7 +31,7 @@ import string
 # import csv
 
 in_file = r"data\eng-sparql.txt"
-out_file = r"eng-sparql_tab1.txt"
+out_file = r"eng-sparql.txt"
 
 with open(in_file, mode="r", encoding="utf8") as in_text:
     in_reader = csv.reader(in_text, delimiter = ',')

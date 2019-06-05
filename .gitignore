@@ -115,3 +115,5 @@ tasks.xml
 .floydignore
 floyd.yml
 
+*.vec
+
