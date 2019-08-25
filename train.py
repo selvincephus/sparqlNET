@@ -886,8 +886,8 @@ teacher_forcing_ratio = 0.5
 hidden_size = 1024
 encoder1 = EncoderRNN(input_lang.n_words, hidden_size).to(device)
 attn_decoder1 = AttnDecoderRNN(hidden_size, output_lang.n_words, dropout_p=0.1).to(device)
-no_of_epoch = 1
-iters = 50
+no_of_epoch = 10
+iters = 5000
 total_data = len(pairs)
 total_train = int(total_data * 0.9)
 total_test = int(total_data - total_train)
