@@ -36,9 +36,12 @@ class SparqlPostprocessing:
 class Lang:
     def __init__(self, name):
         self.name = name
-        self.word2index = {"humidity":2,"solve":3,"alarm":4,"features":5,"LAA":6,"CDA":7,"counters":8, "value":9, "package":10}
+        # self.word2index = {"humidity":2,"solve":3,"alarm":4,"features":5,"LAA":6,"CDA":7,"counters":8, "value":9, "package":10}
+        # self.word2count = {}
+        # self.index2word = {0:"SOS",1:"EOS",2:"humidity",3:"solve",4:"alarm",5:"features",6:"LAA",7:"CDA",8:"counters",9:"value",10:"package"}
+        self.word2index = {}
         self.word2count = {}
-        self.index2word = {0:"SOS",1:"EOS",2:"humidity",3:"solve",4:"alarm",5:"features",6:"LAA",7:"CDA",8:"counters",9:"value",10:"package"}
+        self.index2word = {0:"SOS",1:"EOS"}
 
         self.n_words = len(self.word2index)  # Count SOS and EOS
 
@@ -80,12 +83,17 @@ class DataPrep:
     def readLangs(self):
         # print("Reading lines...")
         # Read the file and split into lines
-
-        data = open('data/%s-%s.txt' % (self.lang1, self.lang2), encoding="utf8"). \
+        data = []
+        lines = open('data/%s-%s.txt' % (self.lang1, self.lang2), encoding="utf8"). \
             read().strip().split('\n')
+        for line in lines:
+            if len(line) < 2:
+                pass
+            else:
+                data.append(line)
 
         # Split every line into pairs and normalize
-        pairs = [[self.normalizeString(s) for s in l.split(',')] for l in data]
+        pairs = [[self.normalizeString(s) for s in l.split('\t')] for l in data]
 
         # Reverse pairs, make Lang instances
         if self.reverse:

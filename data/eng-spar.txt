@@ -1,100 +1,81 @@
-Which comic characters are painted by Bill Finger?,SELECT DISTINCT ?uri WHERE {?uri <dbpedia ontology creator> <dbpedia resource Bill_Finger>  . ?uri <22rdfsyntaxnstype> <dbpedia ontology ComicsCharacter>}
-Was winston churchill the prime minister of Selwyn Lloyd?,ASK WHERE { <dbpedia resource Selwyn_Lloyd> <dbpedia ontology primeMinister> <dbpedia resource  Winston_Churchill> }
-Name some leaders of the parent organisation of the Gestapo?,SELECT DISTINCT ?uri WHERE { <dbpedia resource  Gestapo> <dbpedia ontology parentOrganisation> ?x . ?x <dbpedia ontology leader> ?uri  . }
-Which party has come in power in Mumbai North?,SELECT DISTINCT ?uri WHERE { ?x <dbpedia propertyconstituency> <dbpedia resource  Mumbai_North_(Lok_Sabha_constituency)> . ?x <dbpedia ontology party> ?uri  . }
-Name the municipality of Roberto Clemente Bridge ?, SELECT DISTINCT ?uri WHERE { <dbpedia resource  Roberto_Clemente_Bridge> <dbpedia ontology municipality> ?uri }
-Which royalty was married to ptolemy XIII Theos Philopator and had mother named Cleopatra V ?,SELECT DISTINCT ?uri WHERE {?uri <dbpedia propertymother> <dbpedia resource Cleopatra_V_of_Egypt> . ?uri <dbpedia propertyspouse> <dbpedia resource Ptolemy_XIII_Theos_Philopator>  . ?uri <22rdfsyntaxnstype> <dbpedia ontology Royalty>}
-In which monarch did Li Si succeed someone?,SELECT DISTINCT ?uri WHERE { ?x <dbpedia ontology successor> <dbpedia resource Li_Si> . ?x <dbpedia ontology monarch> ?uri  . }
-Which home town of PAvel Moroz is the death location of the Yakov Estrin ?, SELECT DISTINCT ?uri WHERE { <dbpedia resource Pavel_Moroz> <dbpedia propertyhometown> ?uri. <dbpedia resource Yakov_Estrin> <dbpedia ontology deathPlace> ?uri}
-Which company which assembles its cars in Broadmeadows Victoria?,SELECT DISTINCT ?uri WHERE { ?x <dbpedia propertyassembly> <dbpedia resource Broadmeadows_Victoria> . ?x <dbpedia ontology parentCompany> ?uri  . ?x <22rdfsyntaxnstype> <dbpedia ontology Automobile>}
-Which person designed the cars which has been designed by ASC Creative Services?,SELECT DISTINCT ?uri WHERE { ?x <dbpedia ontology designCompany> <dbpedia resource ASC_Creative_Services> . ?x <dbpedia propertydesigner> ?uri  . ?x <22rdfsyntaxnstype> <dbpedia ontology Automobile>}
-Name the scientist whose supervisor was Ernest Rutherford and had a doctoral students named Charles Drummond Ellis?,SELECT DISTINCT ?uri WHERE {?uri <dbpedia ontology doctoralAdvisor> <dbpedia resource Ernest_Rutherford> . ?uri <dbpedia propertydoctoralStudents> <dbpedia resource Charles_Drummond_Ellis>  . ?uri <22rdfsyntaxnstype> <dbpedia ontology Scientist>}
-Where was the designer of REP Parasol born?,SELECT DISTINCT ?uri WHERE { <dbpedia resource REP_Parasol> <dbpedia ontology designer> ?x . ?x <dbpedia ontology birthPlace> ?uri  . }
-What is the common affiliation of the Monroe Carell Jr. Children's Hospital at Vanderbilt and alma mater of the Duncan U. Fletcher?, SELECT DISTINCT ?uri WHERE { <dbpedia resource Monroe_Carell_Jr._Children's_Hospital_at_Vanderbilt> <dbpedia propertyaffiliation> ?uri. <dbpedia resource Duncan_U._Fletcher> <dbpedia ontology almaMater> ?uri}
-What is the hometown of Nader Guirat where Josef Johansson was born too?,SELECT DISTINCT ?uri WHERE { <dbpedia resource Josef_Johansson> <dbpedia propertybirthPlace> ?uri. <dbpedia resource Nader_Guirat> <dbpedia ontology hometown> ?uri . }
-What tv series can be said to be related to the sarah jane adventure and dr who confidential?,SELECT DISTINCT ?uri WHERE { ?uri <dbpedia ontology related> <dbpedia resource The_Sarah_Jane_Adventures> . ?uri <dbpedia ontology related> <dbpedia resource Doctor_Who_Confidential> . }
-How many shows does HBO have?,SELECT DISTINCT COUNT(?uri) WHERE {?uri <dbpedia ontology company> <dbpedia resource HBO>  . ?uri <22rdfsyntaxnstype> <dbpedia ontology TelevisionShow>}
-Is Nikolai Morozov the former coach of Stanislav Morozov?,ASK WHERE { <dbpedia resource Stanislav_Morozov> <dbpedia ontology formerCoach> <dbpedia resource Nikolai_Morozov_(figure_skater)> }
-What is the common genere of Abhijit Kunte and Kasparov ?, SELECT DISTINCT ?uri WHERE { <dbpedia resource Abhijit_Kunte> <dbpedia propertyknownFor> ?uri. <dbpedia resource Virtual_Kasparov> <dbpedia ontology genre> ?uri}
-Which share holder of outlook is also the content license of the MSX Basics ?, SELECT DISTINCT ?uri WHERE { <dbpedia resource MSX_BASIC> <dbpedia propertylicense> ?uri. <dbpedia resource Outlook_on_the_web> <dbpedia propertyowner> ?uri}
-On how many different grounds were seasons chaired by Ronaldo held?,SELECT DISTINCT COUNT(?uri) WHERE { ?x <dbpedia ontology chairman> <dbpedia resource Ronaldo> . ?x <dbpedia ontology ground> ?uri  . }
-Which source country of SamurAbsheron channel is the birth place of Anar Salmanov ?, SELECT DISTINCT ?uri WHERE { <dbpedia resource Samur–Absheron_channel> <dbpedia ontology sourceCountry> ?uri. <dbpedia resource Anar_Salmanov> <dbpedia propertyplaceOfBirth> ?uri}
-Where was the battle fought where 2nd Foreign Infantry Regiment participated  ?,SELECT DISTINCT ?uri WHERE { <dbpedia resource 2nd_Foreign_Infantry_Regiment> <dbpedia ontology battle> ?x . ?x <dbpedia ontology territory> ?uri  . ?x <22rdfsyntaxnstype> <dbpedia ontology MilitaryConflict>}
-What is the operator of SR class 3Sub ?, SELECT DISTINCT ?uri WHERE { <dbpedia resource SR_class_3Sub> <dbpedia ontology operator> ?uri }
-Which band's  former member are Kevin Jonas and Joe Jonas?,SELECT DISTINCT ?uri WHERE {?uri <dbpedia ontology formerBandMember> <dbpedia resource Kevin_Jonas> . ?uri <dbpedia propertypastMembers> <dbpedia resource Joe_Jonas>  . ?uri <22rdfsyntaxnstype> <dbpedia ontology Band>}
-Did Timm Gunn guest in Sunrise (HIMYM)?,ASK WHERE { <dbpedia resource Sunrise_(How_I_Met_Your_Mother)> <dbpedia propertyguests> <dbpedia resource Tim_Gunn> }
-Name the tenants of O.co Coliseum ?, SELECT DISTINCT ?uri WHERE { <dbpedia resource O.co_Coliseum> <dbpedia ontology tenant> ?uri }
-which politician is currently ruling over Rishkiesh?, SELECT DISTINCT ?uri WHERE { <dbpedia resource Rishikesh> <dbpedia ontology leaderName> ?uri }
-Is north america one of the destinations of airtours airways?,ASK WHERE { <dbpedia resource Airtours_International_Airways> <dbpedia ontology destination> <dbpedia resource North_America> }
-Who have done their PhDs under a National Medal of Science winner?,SELECT DISTINCT ?uri WHERE { ?x <dbpedia propertyprizes> <dbpedia resource National_Medal_of_Science> . ?uri <dbpedia propertydoctoralAdvisor> ?x  . }
-Who is the common manager of Aston Villa 2000-02 season and aldo the manager of Middlesbrough F.C. season 2009-10, SELECT DISTINCT ?uri WHERE { <dbpedia resource 2000–01_Aston_Villa_F.C._season> <dbpedia propertyname> ?uri. <dbpedia resource 2009–10_Middlesbrough_F.C._season> <dbpedia ontology manager> ?uri}
-Name the mascot of the military branch of William Harper.,SELECT DISTINCT ?uri WHERE { <dbpedia resource William_Harper_(Rhodesian_politician)> <dbpedia ontology militaryBranch> ?x . ?x <dbpedia propertymascot> ?uri  . }
-How many tenats have been there of the constructions of PCL constructures?,SELECT DISTINCT COUNT(?uri) WHERE { ?x <dbpedia ontology builder> <dbpedia resource PCL_Construction> . ?x <dbpedia ontology tenant> ?uri  . }
-Was Kevin Jonas a part of Jonas brothers?,ASK WHERE { <dbpedia resource Jonas_Brothers> <dbpedia ontology formerBandMember> <dbpedia resource Kevin_Jonas> }
-What was the book that lead to Sagan's Cosmos about?,SELECT DISTINCT ?uri WHERE { ?x <dbpedia ontology subsequentWork> <dbpedia resource Cosmos_(Carl_Sagan_book)> . ?x <dbpedia propertysubject> ?uri  . ?x <22rdfsyntaxnstype> <dbpedia ontology Book>}
-Which kind of conventions are held in Rosemont Illinois?,SELECT DISTINCT ?uri WHERE { ?x <dbpedia ontology location> <dbpedia resource Rosemont_Illinois> . ?x <dbpedia propertygenre> ?uri  . ?x <22rdfsyntaxnstype> <dbpedia ontology Convention>}
-What are the type of Greenup County High School?, SELECT DISTINCT ?uri WHERE { <dbpedia resource Greenup_County_High_School> <dbpedia propertytype> ?uri }
-List the teams for which Bobby Hoppe played ?, SELECT DISTINCT ?uri WHERE { <dbpedia resource Bobby_Hoppe> <dbpedia propertypastteams> ?uri }
-What are some famous works of the writer of The Second Coming?,SELECT DISTINCT ?uri WHERE { <dbpedia resource The_Second_Coming_(TV_serial)> <dbpedia propertywriter> ?x . ?x <dbpedia propertynotableworks> ?uri  . }
-How many books have been penned by Miguel de Cervantes?,SELECT DISTINCT COUNT(?uri) WHERE {?uri <dbpedia ontology author> <dbpedia resource Miguel_de_Cervantes>  . ?uri <22rdfsyntaxnstype> <dbpedia ontology Book>}
-Which labels signs up progressive rock bands?,SELECT DISTINCT ?uri WHERE { ?x <dbpedia propertygenre> <dbpedia resource Progressive_rock> . ?x <dbpedia ontology recordLabel> ?uri  . ?x <22rdfsyntaxnstype> <dbpedia ontology MusicalArtist>}
-What are the schools whose city is Reading Berkshire?, SELECT DISTINCT ?uri WHERE {?uri <dbpedia ontology city> <dbpedia resource Reading_Berkshire> }
-Which magazine's editor is married to Crystal Harris?,SELECT DISTINCT ?uri WHERE { ?x <dbpedia propertyspouse> <dbpedia resource Crystal_Harris> . ?uri <dbpedia propertyeditor> ?x  . ?uri <22rdfsyntaxnstype> <dbpedia ontology Magazine>}
-Does the west thurrock come under Essex county?,ASK WHERE { <dbpedia resource West_Thurrock> <dbpedia ontology ceremonialCounty> <dbpedia resource Essex> }
-How many people have headed organizations headquartered at Niederkirchnerstrae?,SELECT DISTINCT COUNT(?uri) WHERE { ?x <dbpedia ontology headquarter> <dbpedia resource Niederkirchnerstraße> . ?x <dbpedia ontology leader> ?uri  . }
-In which television shows have Steven Moffat served as an executive producer?,SELECT DISTINCT ?uri WHERE {?uri <dbpedia ontology executiveProducer> <dbpedia resource Steven_Moffat>  . ?uri <22rdfsyntaxnstype> <dbpedia ontology TelevisionShow>}
-Which shareholder of Dagenham wind turbines is also the parent company of the Ford Falcon Cobra?, SELECT DISTINCT ?uri WHERE { <dbpedia resource Ford_Falcon_Cobra> <dbpedia ontology parentCompany> ?uri. <dbpedia resource Dagenham_wind_turbines> <dbpedia propertyowner> ?uri}
-What are the airlines whose hub is San Francisco International Airport?,SELECT DISTINCT ?uri WHERE {?uri <dbpedia propertyhubs> <dbpedia resource San_Francisco_International_Airport>  . ?uri <22rdfsyntaxnstype> <dbpedia ontology Airline>}
-Where can I find things run by the maritime museum of San Diego?,SELECT DISTINCT ?uri WHERE { ?x <dbpedia propertygoverningBody> <dbpedia resource Maritime_Museum_of_San_Diego> . ?x <dbpedia propertylocation> ?uri  . }
-What is the local authority of the Trinity School Brentwood and place of birth of the Sarah Walker (badminton) ?, SELECT DISTINCT ?uri WHERE { <dbpedia resource Trinity_School_Brentwood> <dbpedia ontology localAuthority> ?uri. <dbpedia resource Sarah_Walker_(badminton)> <dbpedia propertyplaceOfBirth> ?uri}
-How many services does 21Vianet provide?,SELECT DISTINCT COUNT(?uri) WHERE { <dbpedia resource 21Vianet> <dbpedia propertyservices> ?uri  . }
-Which planet was discovered by Johann Gottfired and Urbain Le Verrier ?,SELECT DISTINCT ?uri WHERE {?uri <dbpedia propertydiscoverer> <dbpedia resource Johann_Gottfried_Galle> . ?uri <dbpedia ontology discoverer> <dbpedia resource Urbain_Le_Verrier>  . ?uri <22rdfsyntaxnstype> <dbpedia ontology Planet>}
-where did the office holder died  who is successor to Elmer Burkett ?,SELECT DISTINCT ?uri WHERE { ?x <dbpedia propertysuccessor> <dbpedia resource Elmer_Burkett> . ?x <dbpedia propertydeathPlace> ?uri  . ?x <22rdfsyntaxnstype> <dbpedia ontology OfficeHolder>}
-Name the team for which Hensley Meulens played whihc was also the debut team od Steve Ontiveros ?, SELECT DISTINCT ?uri WHERE { <dbpedia resource Steve_Ontiveros_(infielder)> <dbpedia propertydebutteam> ?uri. <dbpedia resource Hensley_Meulens> <dbpedia ontology team> ?uri}
-List the actors of  Lucy Sullivan Is Getting Married?, SELECT DISTINCT ?uri WHERE { <dbpedia resource Lucy_Sullivan_Is_Getting_Married> <dbpedia propertystarring> ?uri }
-Name the island with archipelago as Society Islands and has the largest city named Faaa ?,SELECT DISTINCT ?uri WHERE {?uri <dbpedia ontology largestCity> <dbpedia resource Faaa> . ?uri <dbpedia propertyarchipelago> <dbpedia resource Society_Islands>  . ?uri <22rdfsyntaxnstype> <dbpedia ontology Island>}
-Who started at the pole position in both 1997 canadian grand prix and the 94 spanish one?,SELECT DISTINCT ?uri WHERE { <dbpedia resource 1997_Canadian_Grand_Prix> <dbpedia propertypoleDriver> ?uri. <dbpedia resource 1994_Spanish_Grand_Prix> <dbpedia propertypoleDriver> ?uri . }
-Who appointed the governor under whom Richard Winn served?,SELECT DISTINCT ?uri WHERE { <dbpedia resource Richard_Winn> <dbpedia ontology governor> ?x . ?x <dbpedia propertyappointer> ?uri  . }
-What company involved in the development of Sherlock did Arthur Levinson work for?, SELECT DISTINCT ?uri WHERE { <dbpedia resource Arthur_D._Levinson> <dbpedia ontology occupation> ?uri. <dbpedia resource Sherlock_(software)> <dbpedia ontology developer> ?uri}
-Which tenants of the Master Card center is also th draft team of Sam Carrrick , SELECT DISTINCT ?uri WHERE { <dbpedia resource MasterCard_Centre> <dbpedia propertytenants> ?uri. <dbpedia resource Sam_Carrick> <dbpedia propertydraftTeam> ?uri}
-Who produced the TV shows for Fremantle Media?,SELECT DISTINCT ?uri WHERE { ?x <dbpedia propertycompany> <dbpedia resource FremantleMedia> . ?x <dbpedia ontology producer> ?uri  . ?x <22rdfsyntaxnstype> <dbpedia ontology TelevisionShow>}
-What is the style of architecture of South Loop Printing House District ?, SELECT DISTINCT ?uri WHERE { <dbpedia resource South_Loop_Printing_House_District> <dbpedia ontology architecturalStyle> ?uri }
-Whose provides the service of  Outlook and also products  such as Visual Studio?,SELECT DISTINCT ?uri WHERE {?uri <dbpedia propertyservices> <dbpedia resource Outlook.com> . ?uri <dbpedia propertyproducts> <dbpedia resource Microsoft_Visual_Studio>  . }
-Is Ombla originate in Croatia?,ASK WHERE { <dbpedia resource Ombla> <dbpedia ontology sourceMountain> <dbpedia resource Croatia> }
-What is the nationality of Newin Chidchob ?, SELECT DISTINCT ?uri WHERE { <dbpedia resource Newin_Chidchob> <dbpedia propertynationality> ?uri }
-In which team did Dave Bing and Ron Reed started their basketball career?,SELECT DISTINCT ?uri WHERE { <dbpedia resource Dave_Bing> <dbpedia propertydraftTeam> ?uri. <dbpedia resource Ron_Reed> <dbpedia propertydraftTeam> ?uri . }
-Was Ganymede discovered by Galileo Galilei?,ASK WHERE { <dbpedia resource Ganymede_(moon)> <dbpedia propertydiscoverer> <dbpedia resource Galileo_Galilei> }
-List some musicians associated with famous guitar players?,SELECT DISTINCT ?uri WHERE { ?x <dbpedia propertynotableInstruments> <dbpedia resource Guitar> . ?x <dbpedia ontology associatedMusicalArtist> ?uri  . }
-What are the awards won by the producer of Elizabeth: The Golden Age?,SELECT DISTINCT ?uri WHERE { <dbpedia resource Elizabeth:_The_Golden_Age_(soundtrack)> <dbpedia propertyproducer> ?x . ?x <dbpedia propertyawards> ?uri  . }
-With what company is the service OneDrive associated?,SELECT DISTINCT ?uri WHERE {?uri <dbpedia propertyservices> <dbpedia resource OneDrive>  . ?uri <22rdfsyntaxnstype> <dbpedia ontology Company>}
-Name the university whose affiliations's foundation place is Washington D.C.?,SELECT DISTINCT ?uri WHERE { ?x <dbpedia ontology foundationPlace> <dbpedia resource Washington_D.C.> . ?uri <dbpedia propertyaffiliations> ?x  . ?uri <22rdfsyntaxnstype> <dbpedia ontology University>}
-Name presidents of the schools which have queen noor of Jordan as one of them ?,SELECT DISTINCT ?uri WHERE { ?x <dbpedia ontology president> <dbpedia resource Queen_Noor_of_Jordan> . ?x <dbpedia propertypresident> ?uri  . ?x <22rdfsyntaxnstype> <dbpedia ontology School>}
-Who appointed the governor under which Robert Witherspoon worked?,SELECT DISTINCT ?uri WHERE { <dbpedia resource Robert_Witherspoon> <dbpedia ontology governor> ?x . ?x <dbpedia propertyappointer> ?uri  . }
-Who is the producer of the song which is the previous work of He's a Liar ?,SELECT DISTINCT ?uri WHERE { <dbpedia resource He's_a_Liar> <dbpedia ontology previousWork> ?x . ?x <dbpedia ontology producer> ?uri  . ?x <22rdfsyntaxnstype> <dbpedia ontology Song>}
-List the base currency of the country whose anthem is Oj svijetla majska zoro.,SELECT DISTINCT ?uri WHERE { ?x <dbpedia ontology anthem> <dbpedia resource Oj_svijetla_majska_zoro> . ?x <dbpedia propertycurrency> ?uri  . }
-Who gave the voice for Allen Walker ?, SELECT DISTINCT ?uri WHERE { <dbpedia resource Allen_Walker> <dbpedia ontology voice> ?uri }
-Who is associated to Publius Servilius Vatia Isauricus  and Marcus Calpurnius Bibulus?,SELECT DISTINCT ?uri WHERE { ?uri <dbpedia ontology associate> <dbpedia resource Publius_Servilius_Vatia_Isauricus_(consul_48_BC)> . ?uri <dbpedia ontology associate> <dbpedia resource Marcus_Calpurnius_Bibulus> . }
-Which country has given citizenship to both saima chowdhury and edmund john?,SELECT DISTINCT ?uri WHERE { <dbpedia resource Saima_Chowdhury> <dbpedia ontology citizenship> ?uri. <dbpedia resource Edmund_John> <dbpedia ontology citizenship> ?uri . }
-Who is the person that first ascented the Cathedral Peak and Mount Hoffmann?,SELECT DISTINCT ?uri WHERE { <dbpedia resource Cathedral_Peak_(California)> <dbpedia ontology firstAscentPerson> ?uri. <dbpedia resource Mount_Hoffmann> <dbpedia ontology firstAscentPerson> ?uri . }
-What university campuses are situated in Indiana?,SELECT DISTINCT ?uri WHERE {?uri <dbpedia ontology campus> <dbpedia resource Indiana>  . ?uri <22rdfsyntaxnstype> <dbpedia ontology University>}
-Where is the swedish covenant hospital?, SELECT DISTINCT ?uri WHERE { <dbpedia resource Swedish_Covenant_Hospital> <dbpedia ontology location> ?uri }
-Which composer of Girl from the North Country is the subsequent work of the Moondog Matinee?, SELECT DISTINCT ?uri WHERE { <dbpedia resource Girl_from_the_North_Country> <dbpedia ontology composer> ?uri. <dbpedia resource Moondog_Matinee> <dbpedia ontology subsequentWork> ?uri}
-What is the television show whose vocals are performed by  April Stewart and Mona Marshall?,SELECT DISTINCT ?uri WHERE { ?uri <dbpedia propertyvoices> <dbpedia resource April_Stewart> . ?uri <dbpedia propertyvoices> <dbpedia resource Mona_Marshall> . ?uri <22rdfsyntaxnstype> <dbpedia ontology TelevisionShow>}
-Name the members of  boards of Freedom of the City and Trinity House?,SELECT DISTINCT ?uri WHERE { ?uri <dbpedia ontology board> <dbpedia resource Freedom_of_the_City> . ?uri <dbpedia ontology board> <dbpedia resource Trinity_House> . }
-Was Reza Amrollahi born in Iran?,ASK WHERE { <dbpedia resource Reza_Amrollahi> <dbpedia propertybirthplace> <dbpedia resource Iran> }
-Which title of Zaman Shah Durrani is also the nationality of Salahuddin ?, SELECT DISTINCT ?uri WHERE { <dbpedia resource Zaman_Shah_Durrani> <dbpedia propertytitle> ?uri. <dbpedia resource Salahuddin_Rabbani> <dbpedia ontology nationality> ?uri}
-In which war did Roh Tae Woo and Lee Leffingwell fight?,SELECT DISTINCT ?uri WHERE { <dbpedia resource Roh_Tae-woo> <dbpedia ontology battle> ?uri. <dbpedia resource Lee_Leffingwell> <dbpedia ontology battle> ?uri . }
-list  the producer of the movies in which Rosemarie DeWitt in the star cast?,SELECT DISTINCT ?uri WHERE { ?x <dbpedia propertystarring> <dbpedia resource Rosemarie_DeWitt> . ?x <dbpedia propertyproducer> ?uri  . ?x <22rdfsyntaxnstype> <dbpedia ontology Film>}
-What can be cooked out of things belonging to the order Sapindales?,SELECT DISTINCT ?uri WHERE { ?x <dbpedia ontology order> <dbpedia resource Sapindales> . ?uri <dbpedia ontology ingredient> ?x  . }
-How many  TV shows were made by someone who was associated with Lewis Hamilton?,SELECT DISTINCT COUNT(?uri) WHERE { ?x <dbpedia ontology associatedBand> <dbpedia resource Lewis_Hamilton> . ?uri <dbpedia propertycreator> ?x  . ?uri <22rdfsyntaxnstype> <dbpedia ontology TelevisionShow>}
-What is the city whose mayor is Giorgos Kaminis?,SELECT DISTINCT ?uri WHERE {?uri <dbpedia propertymayor> <dbpedia resource Giorgos_Kaminis>  . ?uri <22rdfsyntaxnstype> <dbpedia ontology AdministrativeRegion>}
-Name the alma mater of Michael hahn ?, SELECT DISTINCT ?uri WHERE { <dbpedia resource Michael_Hahn> <dbpedia ontology almaMater> ?uri }
-How many party leaders are there whose parties are headquartered in Berlin?,SELECT DISTINCT COUNT(?uri) WHERE { ?x <dbpedia ontology headquarter> <dbpedia resource Berlin> . ?x <dbpedia ontology leader> ?uri  . ?uri <22rdfsyntaxnstype> <dbpedia ontology Politician>}
-How many total religions are followed by people whose hometown is somewhere in India?,SELECT DISTINCT COUNT(?uri) WHERE { ?x <dbpedia ontology hometown> <dbpedia resource India> . ?x <dbpedia propertyreligion> ?uri  . }
-Who are the cast members of The Simpsons Ride?, SELECT DISTINCT ?uri WHERE { <dbpedia resource The_Simpsons_Ride> <dbpedia propertystarring> ?uri }
-Which american football team  has stadium as O.co Coliseum?,SELECT DISTINCT ?uri WHERE {?uri <dbpedia ontology locationCity> <dbpedia resource O.co_Coliseum>  . ?uri <22rdfsyntaxnstype> <dbpedia ontology AmericanFootballTeam>}
-What woman acted in the mating habits of earthbound humans and is often associated with Mams taylor?,SELECT DISTINCT ?uri WHERE { <dbpedia resource The_Mating_Habits_of_the_Earthbound_Human> <dbpedia propertystarring> ?uri. <dbpedia resource Mams_Taylor> <dbpedia ontology associatedMusicalArtist> ?uri . }
-List the products of Playboy Enterprises?, SELECT DISTINCT ?uri WHERE { <dbpedia resource Playboy_Enterprises> <dbpedia propertyproducts> ?uri }
-Did Gwo Ka originate in Western Africa?,ASK WHERE { <dbpedia resource Gwo_ka> <dbpedia propertystylisticOrigins> <dbpedia resource West_Africa> }
-What are some artists on the show whose opening theme is Send It On?,SELECT DISTINCT ?uri WHERE { ?x <dbpedia ontology openingTheme> <dbpedia resource Send_It_On_(Disney's_Friends_for_Change_song)> . ?x <dbpedia propertyartist> ?uri  . ?x <22rdfsyntaxnstype> <dbpedia ontology TelevisionShow>}
-Which company has a product named Visual Studio and One Drive as service ?,SELECT DISTINCT ?uri WHERE {?uri <dbpedia propertyservices> <dbpedia resource OneDrive> . ?uri <dbpedia propertyproducts> <dbpedia resource Microsoft_Visual_Studio>  . ?uri <22rdfsyntaxnstype> <dbpedia ontology Company>}
+Which comic characters are painted by token?	SELECT DISTINCT ?uri WHERE {?uri dbo:creator dbr:token  . ?uri rdf:type dbo:ComicsCharacter}
+Was winston churchill the prime minister of token?	ASK WHERE { dbr:token dbo:primeMinister dbr:Winston_Churchill }
+Name some leaders of the parent organisation of the token?	SELECT DISTINCT ?uri WHERE { dbr:token dbo:parentOrganisation ?x . ?x dbo:leader ?uri  . }
+Which party has come in power in token?	SELECT DISTINCT ?uri WHERE { ?x dbp:constituency dbr:token_(Lok_Sabha_constituency) . ?x dbo:party ?uri  . }
+Name the municipality of token ?	 SELECT DISTINCT ?uri WHERE { dbr:token dbo:municipality ?uri }
+Which royalty was married to tokenone and had mother named tokentwo ?	SELECT DISTINCT ?uri WHERE {?uri dbp:mother dbr:tokentwo . ?uri dbp:spouse dbr:tokenone  . ?uri rdf:type dbo:Royalty}
+In which monarch did token succeed someone?	SELECT DISTINCT ?uri WHERE { ?x dbo:successor dbr:token . ?x dbo:monarch ?uri  . }
+Which home town of tokenone is the death location of the tokentwo ?	 SELECT DISTINCT ?uri WHERE { dbr:tokenone dbp:hometown ?uri. dbr:tokentwo dbo:deathPlace ?uri}
+Which company which assembles its cars in token?	SELECT DISTINCT ?uri WHERE { ?x dbp:assembly dbr:token . ?x dbo:parentCompany ?uri  . ?x rdf:type dbo:Automobile}
+Which person designed the cars which has been designed by token?	SELECT DISTINCT ?uri WHERE { ?x dbo:designCompany dbr:token . ?x dbp:designer ?uri  . ?x rdf:type dbo:Automobile}
+Where was the designer of token born?	SELECT DISTINCT ?uri WHERE { dbr:token dbo:designer ?x . ?x dbo:birthPlace ?uri  . }
+What is the common affiliation of the tokenone and alma mater of the tokentwo?	 SELECT DISTINCT ?uri WHERE { dbr:tokenone dbp:affiliation ?uri. dbr:tokentwo dbo:almaMater ?uri}
+What is the hometown of tokenone where tokentwo was born too?	SELECT DISTINCT ?uri WHERE { dbr:tokentwo dbp:birthPlace ?uri. dbr:tokenone dbo:hometown ?uri . }
+What tv series can be said to be related to the tokenone adventure and tokentwo?	SELECT DISTINCT ?uri WHERE { ?uri dbo:related dbr:tokenone . ?uri dbo:related dbr:tokentwo . }
+How many shows does token have?	SELECT DISTINCT COUNT(?uri) WHERE {?uri dbo:company dbr:token  . ?uri rdf:type dbo:TelevisionShow}
+Is tokenone the former coach of tokentwo?	ASK WHERE { dbr:tokentwo dbo:formerCoach dbr:tokenone }
+What is the common genere of tokenone and tokentwo ?	 SELECT DISTINCT ?uri WHERE { dbr:tokenone dbp:knownFor ?uri. dbr:tokentwo dbo:genre ?uri}
+Which share holder of tokenone is also the content license of the tokentwo ?	 SELECT DISTINCT ?uri WHERE { dbr:tokentwo dbp:license ?uri. dbr:tokenone dbp:owner ?uri}
+On how many different grounds were seasons chaired by token held?	SELECT DISTINCT COUNT(?uri) WHERE { ?x dbo:chairman dbr:token . ?x dbo:ground ?uri  . }
+Which source country of tokenone is the birth place of tokentwo ?	 SELECT DISTINCT ?uri WHERE { dbr:tokenone dbo:sourceCountry ?uri. dbr:tokentwo dbp:placeOfBirth ?uri}
+Where was the battle fought where token participated  ?	SELECT DISTINCT ?uri WHERE { dbr:token dbo:battle ?x . ?x dbo:territory ?uri  . ?x rdf:type dbo:MilitaryConflict}
+What is the operator of token ?	 SELECT DISTINCT ?uri WHERE { dbr:token dbo:operator ?uri }
+Which band's  former member are tokenone and tokentwo?	SELECT DISTINCT ?uri WHERE {?uri dbo:formerBandMember dbr:tokenone . ?uri dbp:pastMembers dbr:tokentwo  . ?uri rdf:type dbo:Band}
+Did tokenone guest in HIMYM ? ASK WHERE { dbr:HIMYM dbp:guests dbr:tokenone }
+Name the tenants of token ? SELECT DISTINCT ?uri WHERE { dbr:token dbo:tenant ?uri }
+which politician is currently ruling over token?	 SELECT DISTINCT ?uri WHERE { dbr:token dbo:leaderName ?uri }
+Is token one of the destinations of airtours airways?	ASK WHERE { dbr:Airtours_International_Airways dbo:destination dbr:token }
+Name the mascot of the military branch of token.	SELECT DISTINCT ?uri WHERE { dbr:token dbo:militaryBranch ?x . ?x dbp:mascot ?uri  . }
+Was token a part of Jonas brothers?	ASK WHERE { dbr:Jonas_Brothers dbo:formerBandMember dbr:token }
+Which kind of conventions are held in token?	SELECT DISTINCT ?uri WHERE { ?x dbo:location dbr:token . ?x dbp:genre ?uri  . ?x rdf:type dbo:Convention}
+What are the type of token?	 SELECT DISTINCT ?uri WHERE { dbr:token dbp:type ?uri }
+List the teams for which token played ?	 SELECT DISTINCT ?uri WHERE { dbr:token dbp:pastteams ?uri }
+What are some famous works of the writer of token?	SELECT DISTINCT ?uri WHERE { dbr:token dbp:writer ?x . ?x dbp:notableworks ?uri  . }
+How many books have been penned by token?	SELECT DISTINCT COUNT(?uri) WHERE {?uri dbo:author dbr:token  . ?uri rdf:type dbo:Book}
+Which labels signs up token?	SELECT DISTINCT ?uri WHERE { ?x dbp:genre dbr:token . ?x dbo:recordLabel ?uri  . ?x rdf:type dbo:MusicalArtist}
+What are the schools whose city is token?	 SELECT DISTINCT ?uri WHERE {?uri dbo:city dbr:token }
+Which magazine's editor is married to token?	SELECT DISTINCT ?uri WHERE { ?x dbp:spouse dbr:token . ?uri dbp:editor ?x  . ?uri rdf:type dbo:Magazine}
+Does the token come under Essex county?	ASK WHERE { dbr:token dbo:ceremonialCounty dbr:Essex }
+How many people have headed organizations headquartered at token?	SELECT DISTINCT COUNT(?uri) WHERE { ?x dbo:headquarter dbr:token . ?x dbo:leader ?uri  . }
+In which television shows have token served as an executive producer?	SELECT DISTINCT ?uri WHERE {?uri dbo:executiveProducer dbr:token  . ?uri rdf:type dbo:TelevisionShow}
+What are the airlines whose hub is token Airport?	SELECT DISTINCT ?uri WHERE {?uri dbp:hubs dbr:token_Airport  . ?uri rdf:type dbo:Airline}
+Where can I find things run by the token?	SELECT DISTINCT ?uri WHERE { ?x dbp:governingBody dbr:token . ?x dbp:location ?uri  . }
+How many services does token provide?	SELECT DISTINCT COUNT(?uri) WHERE { dbr:token dbp:services ?uri  . }
+Who appointed the governor under whom token served?	SELECT DISTINCT ?uri WHERE { dbr:token dbo:governor ?x . ?x dbp:appointer ?uri  . }
+What company involved in the development of Sherlock did token work for?	 SELECT DISTINCT ?uri WHERE { dbr:Arthur_D._Levinson dbo:occupation ?uri. dbr:Sherlock_(software) dbo:developer ?uri}
+Which tenants of the Master Card center is also th draft team of Sam Carrrick 	 SELECT DISTINCT ?uri WHERE { dbr:MasterCard_Centre dbp:tenants ?uri. dbr:Sam_Carrick dbp:draftTeam ?uri}
+Who produced the TV shows for Fremantle Media?	SELECT DISTINCT ?uri WHERE { ?x dbp:company dbr:FremantleMedia . ?x dbo:producer ?uri  . ?x rdf:type dbo:TelevisionShow}
+What is the style of architecture of South Loop Printing House District ?	 SELECT DISTINCT ?uri WHERE { dbr:South_Loop_Printing_House_District dbo:architecturalStyle ?uri }
+Whose provides the service of  Outlook and also products  such as Visual Studio?	SELECT DISTINCT ?uri WHERE {?uri dbp:services dbr:Outlook.com . ?uri dbp:products dbr:Microsoft_Visual_Studio  . }
+Is Ombla originate in Croatia?	ASK WHERE { dbr:Ombla dbo:sourceMountain dbr:Croatia }
+What is the nationality of Newin Chidchob ?	 SELECT DISTINCT ?uri WHERE { dbr:Newin_Chidchob dbp:nationality ?uri }
+In which team did Dave Bing and Ron Reed started their basketball career?	SELECT DISTINCT ?uri WHERE { dbr:Dave_Bing dbp:draftTeam ?uri. dbr:Ron_Reed dbp:draftTeam ?uri . }
+Was Ganymede discovered by Galileo Galilei?	ASK WHERE { dbr:Ganymede_(moon) dbp:discoverer dbr:Galileo_Galilei }
+List some musicians associated with famous guitar players?	SELECT DISTINCT ?uri WHERE { ?x dbp:notableInstruments dbr:Guitar . ?x dbo:associatedMusicalArtist ?uri  . }
+What are the awards won by the producer of Elizabeth: The Golden Age?	SELECT DISTINCT ?uri WHERE { dbr:Elizabeth:_The_Golden_Age_(soundtrack) dbp:producer ?x . ?x dbp:awards ?uri  . }
+With what company is the service OneDrive associated?	SELECT DISTINCT ?uri WHERE {?uri dbp:services dbr:OneDrive  . ?uri rdf:type dbo:Company}
+Name the university whose affiliations's foundation place is Washington D.C.?	SELECT DISTINCT ?uri WHERE { ?x dbo:foundationPlace dbr:Washington_D.C. . ?uri dbp:affiliations ?x  . ?uri rdf:type dbo:University}
+Name presidents of the schools which have queen noor of Jordan as one of them ?	SELECT DISTINCT ?uri WHERE { ?x dbo:president dbr:Queen_Noor_of_Jordan . ?x dbp:president ?uri  . ?x rdf:type dbo:School}
+Who appointed the governor under which Robert Witherspoon worked?	SELECT DISTINCT ?uri WHERE { dbr:Robert_Witherspoon dbo:governor ?x . ?x dbp:appointer ?uri  . }
+Who is the producer of the song which is the previous work of He's a Liar ?	SELECT DISTINCT ?uri WHERE { dbr:He's_a_Liar dbo:previousWork ?x . ?x dbo:producer ?uri  . ?x rdf:type dbo:Song}
+List the base currency of the country whose anthem is Oj svijetla majska zoro.	SELECT DISTINCT ?uri WHERE { ?x dbo:anthem dbr:Oj_svijetla_majska_zoro . ?x dbp:currency ?uri  . }
+Who gave the voice for Allen Walker ?	 SELECT DISTINCT ?uri WHERE { dbr:Allen_Walker dbo:voice ?uri }
+Which country has given citizenship to both saima chowdhury and edmund john?	SELECT DISTINCT ?uri WHERE { dbr:Saima_Chowdhury dbo:citizenship ?uri. dbr:Edmund_John dbo:citizenship ?uri . }
+What university campuses are situated in Indiana?	SELECT DISTINCT ?uri WHERE {?uri dbo:campus dbr:Indiana  . ?uri rdf:type dbo:University}
+Where is the swedish covenant hospital?	 SELECT DISTINCT ?uri WHERE { dbr:Swedish_Covenant_Hospital dbo:location ?uri }
+Name the members of  boards of Freedom of the City and Trinity House?	SELECT DISTINCT ?uri WHERE { ?uri dbo:board dbr:Freedom_of_the_City . ?uri dbo:board dbr:Trinity_House . }
+Was Reza Amrollahi born in Iran?	ASK WHERE { dbr:Reza_Amrollahi dbp:birthplace dbr:Iran }
+Which title of Zaman Shah Durrani is also the nationality of Salahuddin ?	 SELECT DISTINCT ?uri WHERE { dbr:Zaman_Shah_Durrani dbp:title ?uri. dbr:Salahuddin_Rabbani dbo:nationality ?uri}
+In which war did Roh Tae Woo and Lee Leffingwell fight?	SELECT DISTINCT ?uri WHERE { dbr:Roh_Tae-woo dbo:battle ?uri. dbr:Lee_Leffingwell dbo:battle ?uri . }
+list  the producer of the movies in which Rosemarie DeWitt in the star cast?	SELECT DISTINCT ?uri WHERE { ?x dbp:starring dbr:Rosemarie_DeWitt . ?x dbp:producer ?uri  . ?x rdf:type dbo:Film}
+What can be cooked out of things belonging to the order Sapindales?	SELECT DISTINCT ?uri WHERE { ?x dbo:order dbr:Sapindales . ?uri dbo:ingredient ?x  . }
+How many  TV shows were made by someone who was associated with Lewis Hamilton?	SELECT DISTINCT COUNT(?uri) WHERE { ?x dbo:associatedBand dbr:Lewis_Hamilton . ?uri dbp:creator ?x  . ?uri rdf:type dbo:TelevisionShow}
+What is the city whose mayor is Giorgos Kaminis?	SELECT DISTINCT ?uri WHERE {?uri dbp:mayor dbr:Giorgos_Kaminis  . ?uri rdf:type dbo:AdministrativeRegion}
+Name the alma mater of Michael hahn ?	 SELECT DISTINCT ?uri WHERE { dbr:Michael_Hahn dbo:almaMater ?uri }
+How many party leaders are there whose parties are headquartered in Berlin?	SELECT DISTINCT COUNT(?uri) WHERE { ?x dbo:headquarter dbr:Berlin . ?x dbo:leader ?uri  . ?uri rdf:type dbo:Politician}
+How many total religions are followed by people whose hometown is somewhere in India?	SELECT DISTINCT COUNT(?uri) WHERE { ?x dbo:hometown dbr:India . ?x dbp:religion ?uri  . }
+Who are the cast members of The Simpsons Ride?	 SELECT DISTINCT ?uri WHERE { dbr:The_Simpsons_Ride dbp:starring ?uri }
+Which american football team  has stadium as O.co Coliseum?	SELECT DISTINCT ?uri WHERE {?uri dbo:locationCity dbr:O.co_Coliseum  . ?uri rdf:type dbo:AmericanFootballTeam}
+List the products of Playboy Enterprises?	 SELECT DISTINCT ?uri WHERE { dbr:Playboy_Enterprises dbp:products ?uri }
+Did Gwo Ka originate in Western Africa?	ASK WHERE { dbr:Gwo_ka dbp:stylisticOrigins dbr:West_Africa }
+Which company has a product named Visual Studio and One Drive as service ?	SELECT DISTINCT ?uri WHERE {?uri dbp:services dbr:OneDrive . ?uri dbp:products dbr:Microsoft_Visual_Studio  . ?uri rdf:type dbo:Company}

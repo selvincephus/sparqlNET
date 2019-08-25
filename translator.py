@@ -13,7 +13,7 @@ import torch.nn.functional as F
 
 from data_preprocess import DataPrep
 
-MAX_LENGTH = 50
+MAX_LENGTH = 30
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 SOS_token = 0
 EOS_token = 1
@@ -150,18 +150,24 @@ def call_to_sparql_endpoint(query):
     # print('Sparql query respone: ', value)
 
 
-def generate_sparql(input_sentence):
-    try:
-        input_sentence = dt_prep.normalizeString(input_sentence)
-        output_words, attentions = evaluate(
-            encoder1, attn_decoder1, input_sentence)
-        # print('input =', input_sentence)
-        print('Expected query =', ' '.join(output_words))
-        sparql_output = ' '.join(output_words)
-        sparql_query = re.sub(r'\<EOS\>', '', sparql_output)
-        return sparql_query
-    except:
-        print("Could not generate query.")
+def generate_sparql(input_sentence, encoder1, attn_decoder1):
+    input_sentence = dt_prep.normalizeString(input_sentence)
+    output_words, attentions = evaluate(encoder1, attn_decoder1, input_sentence, MAX_LENGTH)
+    # print('input =', input_sentence)
+    # print('Expected query =', ' '.join(output_words))
+    sparql_output = ' '.join(output_words)
+    sparql_query = re.sub(r'\<EOS\>', '', sparql_output)
+    return sparql_query
+    # try:
+    #     input_sentence = dt_prep.normalizeString(input_sentence)
+    #     output_words, attentions = evaluate(encoder1, attn_decoder1, input_sentence, MAX_LENGTH)
+    #     # print('input =', input_sentence)
+    #     # print('Expected query =', ' '.join(output_words))
+    #     sparql_output = ' '.join(output_words)
+    #     sparql_query = re.sub(r'\<EOS\>', '', sparql_output)
+    #     return sparql_query
+    # except:
+    #     print("Could not generate query.")
 
 
 def exit_gracefully(sig, frame):
@@ -175,25 +181,30 @@ if __name__ == "__main__":
     dt_prep = DataPrep('eng', 'sparql', False, device)
     input_lang, output_lang, pairs = dt_prep.prepareData()
 
-    hidden_size = 1024
+    hidden_size = 256
     encoder1 = EncoderRNN(input_lang.n_words, hidden_size).to(device)
     attn_decoder1 = AttnDecoderRNN(hidden_size, output_lang.n_words, dropout_p=0.1).to(device)
-    if device.type == 'cuda':
-        encoder1 = torch.load('encoder_decoder/encoder1_minproc')
-        attn_decoder1 = torch.load('encoder_decoder/attn_decoder1_minproc')
-    else:
-        encoder1 = torch.load('encoder_decoder/encoder1_minproc', map_location='cpu')
-        attn_decoder1 = torch.load('encoder_decoder/attn_decoder1_minproc', map_location='cpu')
+    encoder1 = torch.load('encoder_decoder/encoder1')
+    attn_decoder1 = torch.load('encoder_decoder/attn_decoder1')
+    # if device.type == 'cuda':
+    #     encoder1 = torch.load('encoder_decoder/encoder1')
+    #     attn_decoder1 = torch.load('encoder_decoder/attn_decoder1')
+    # else:
+    #     encoder1 = torch.load('encoder_decoder/encoder1_cv', map_location='cpu')
+    #     attn_decoder1 = torch.load('encoder_decoder/attn_decoder1_cv', map_location='cpu')
 
     print("Type a question in english to get a sparql response.")
-    while True:
-        question = input('Question: ')
-        query = generate_sparql(question)
-        if query:
-            # print("Sparql generated. Querying endpoing...")
-            print("SPARQL: ", query)
-            if call_to_sparql_endpoint(query):
-                print("Query successful!!!")
-            else:
-                print("Query failed.")
+    question = input('Question: ')
+    query = generate_sparql(question, encoder1, attn_decoder1)
+    print("SPARQL: ", query)
+    # while True:
+    #     question = input('Question: ')
+    #     query = generate_sparql(question, encoder1, attn_decoder1)
+        # if query:
+        #     # print("Sparql generated. Querying endpoint...")
+        #     print("SPARQL: ", query)
+        #     if call_to_sparql_endpoint(query):
+        #         print("Query successful!!!")
+        #     else:
+        #         print("Query failed.")
         # generate_sparql("Which comic characters are painted by Bill Finger?")

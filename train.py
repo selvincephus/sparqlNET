@@ -863,10 +863,10 @@ def evaluateAndShowAttention(input_sentence):
         encoder1, attn_decoder1, input_sentence)
     print('input =', input_sentence)
     print('output =', ' '.join(output_words))
-    sparql_output = ' '.join(output_words)
-    sparql_query = sparqliser.sparqilise(sparql_output)
-    sparql_query = re.sub(r'\<EOS\>', '', sparql_query)
-    call_to_sparql_endpoint(sparql_query)
+    # sparql_output = ' '.join(output_words)
+    # sparql_query = sparqliser.sparqilise(sparql_output)
+    # sparql_query = re.sub(r'\<EOS\>', '', sparql_query)
+    # call_to_sparql_endpoint(sparql_query)
 
     # showAttention(input_sentence, output_words, attentions)
 
@@ -886,8 +886,8 @@ teacher_forcing_ratio = 0.5
 hidden_size = 1024
 encoder1 = EncoderRNN(input_lang.n_words, hidden_size).to(device)
 attn_decoder1 = AttnDecoderRNN(hidden_size, output_lang.n_words, dropout_p=0.1).to(device)
-no_of_epoch = 10
-iters = 10000
+no_of_epoch = 1
+iters = 50
 total_data = len(pairs)
 total_train = int(total_data * 0.9)
 total_test = int(total_data - total_train)
@@ -897,7 +897,7 @@ for epoch in range(no_of_epoch):
     random.shuffle(pairs)
     train_pairs = pairs[:total_train]
     test_pairs = pairs[total_train:]
-    trainIters(encoder1, attn_decoder1, train_pairs, iters, print_every=500)
+    trainIters(encoder1, attn_decoder1, train_pairs, iters, print_every=750)
     loss = validateTest(encoder1, attn_decoder1, test_pairs)
     if loss < 0.9:
         learning_rate = 0.001
@@ -910,7 +910,32 @@ torch.save(attn_decoder1, 'attn_decoder1')
 # attn_decoder1 = torch.load('encoder_decoder/attn_decoder1_minproc')
 
 ######################################################################
+#Which comic characters are painted by Bill Finger?	SELECT DISTINCT ?uri WHERE {?uri dbo:creator dbr:Bill_Finger  . ?uri rdf:type dbo:ComicsCharacter}
+
+test_sentences = ["Was Kevin Jonas a part of Jonas brothers?",
+                  "Does the west thurrock come under Essex county?",
+                  "Is Ombla originate in Croatia?",
+                  "Was Ganymede discovered by Galileo Galilei?",
+                  "Was Reza Amrollahi born in Iran?",
+                  "Was Nick Jonas a part of Jonas brothers?",
+                  "Does the Newark come under Essex county?",
+                  "Is Sava originate in Croatia?",
+                  "Was Ganymede discovered by Galileo Galilei?",
+                  "Was Reza Amrollahi born in Iran?"
+                  ]
+for sentence in test_sentences:
+    input_lang.addSentence(sentence)
+    evaluateAndShowAttention(sentence)
+
+# evaluateAndShowAttention("Was Kevin Jonas a part of Jonas brothers?")
 #
+# evaluateAndShowAttention("Does the west thurrock come under Essex county?")
+#
+# evaluateAndShowAttention("Is Ombla originate in Croatia?")
+#
+# evaluateAndShowAttention("Was Ganymede discovered by Galileo Galilei?")
+#
+# evaluateAndShowAttention("Was Reza Amrollahi born in Iran?")
 
 # evaluateRandomly(encoder1, attn_decoder1)
 # evaluateAndShowAttention("What is the common features of LAA and CDA ?")
@@ -918,7 +943,7 @@ torch.save(attn_decoder1, 'attn_decoder1')
 # evaluateAndShowAttention("Which value package has products LAA and CDA as service ?")
 # evaluateAndShowAttention("Which value package has LAA and CDA as services ?")
 # evaluateAndShowAttention("How many counters does CDA have ?")
-evaluateAndShowAttention("Which comic characters are painted by Bill Finger?")
+# evaluateAndShowAttention("Which comic characters are painted by Bill Finger?")
 
 
 # evaluateAndShowAttention("What is the default value of humidity ?")
